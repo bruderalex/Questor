@@ -2,6 +2,12 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Questor.Web", "Questor.Web\Questor.Web.csproj", "{6BE2E233-501E-4D4A-97E6-7E3998DA73F6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Questor.Core", "Questor.Core\Questor.Core.csproj", "{0981D697-8E17-4DC6-BB5D-E1C78A2D1D96}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Questor.Infrasctructure", "Questor.Infrasctructure\Questor.Infrasctructure.csproj", "{B2308AD3-E5C4-4B17-8EEE-D6320A658023}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scr", "scr", "{46E43136-6290-402E-828D-AF3FE19AECFB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +18,18 @@ Global
 		{6BE2E233-501E-4D4A-97E6-7E3998DA73F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6BE2E233-501E-4D4A-97E6-7E3998DA73F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6BE2E233-501E-4D4A-97E6-7E3998DA73F6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0981D697-8E17-4DC6-BB5D-E1C78A2D1D96}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0981D697-8E17-4DC6-BB5D-E1C78A2D1D96}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0981D697-8E17-4DC6-BB5D-E1C78A2D1D96}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0981D697-8E17-4DC6-BB5D-E1C78A2D1D96}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B2308AD3-E5C4-4B17-8EEE-D6320A658023}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B2308AD3-E5C4-4B17-8EEE-D6320A658023}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B2308AD3-E5C4-4B17-8EEE-D6320A658023}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B2308AD3-E5C4-4B17-8EEE-D6320A658023}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{0981D697-8E17-4DC6-BB5D-E1C78A2D1D96} = {46E43136-6290-402E-828D-AF3FE19AECFB}
+		{B2308AD3-E5C4-4B17-8EEE-D6320A658023} = {46E43136-6290-402E-828D-AF3FE19AECFB}
+		{6BE2E233-501E-4D4A-97E6-7E3998DA73F6} = {46E43136-6290-402E-828D-AF3FE19AECFB}
 	EndGlobalSection
 EndGlobal
