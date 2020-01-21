@@ -8,6 +8,14 @@ namespace Questor.Core.Data.Entities
         {
             
         }
+
+        public SearchResultItem(EngineType engineType, string title, string content, string url)
+        {
+            this._engineType = engineType;
+            this.Title = title;
+            this.Content = content;
+            this.Url = url;
+        }
         
         public string Title { get; set; }
 
@@ -21,8 +29,8 @@ namespace Questor.Core.Data.Entities
         
         public SearchResult SearchResult => this._searchResult;
         
-        private SearchEngine _searchEngine;
+        private EngineType _engineType;
         
-        public SearchEngine SearchEngine => this._searchEngine;
+        public EngineType EngineType => this._engineType;
     }
 }

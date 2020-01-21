@@ -4,7 +4,7 @@ using Questor.Core.Auxiliary;
 
 namespace Questor.Infrasctructure.Logger
 {
-    public class Logger<T> : IQuestorLogger
+    public class Logger<T> : IQuestorLogger<T>
     {
         private readonly ILogger<T> _internalLogger;
 
@@ -23,7 +23,7 @@ namespace Questor.Infrasctructure.Logger
             this._internalLogger.LogInformation(message, args);
         }
 
-        public void LogError(string message, Exception exception, params object[] args)
+        public void LogError(Exception exception, string message, params object[] args)
         {
             this._internalLogger.LogError(exception, message, args);
         }

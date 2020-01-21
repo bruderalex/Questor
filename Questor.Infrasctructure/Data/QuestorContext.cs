@@ -5,16 +5,27 @@ namespace Questor.Infrasctructure.Data
 {
     public class QuestorContext : DbContext
     {
-        public QuestorContext(DbContextOptions options)
+        public QuestorContext()
+        {
+            
+        }
+        
+        public QuestorContext(DbContextOptions<QuestorContext> options)
             : base(options)
         {
         }
 
-        public DbSet<SearchEngine> SearchEngines { get; set; }
+        public DbSet<EngineType> SearchEngines { get; set; }
 
         public DbSet<SearchResult> SearchResults { get; set; }
 
         public DbSet<SearchResultItem> SearchResultItems { get; set; }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseInMemoryDatabase("QuestorDB");
+            base.OnConfiguring(optionsBuilder);
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

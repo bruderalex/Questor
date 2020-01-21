@@ -2,7 +2,7 @@
 
 namespace Questor.Core.Data.Entities
 {
-    public class SearchEngine : BaseEntity
+    public class EngineType : BaseEntity
     {
         public string Name { get; set; }
 

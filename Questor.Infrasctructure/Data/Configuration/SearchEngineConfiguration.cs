@@ -4,9 +4,9 @@ using Questor.Core.Data.Entities;
 
 namespace Questor.Infrasctructure.Data.Configuration
 {
-    public class SearchEngineConfiguration : IEntityTypeConfiguration<SearchEngine>
+    public class SearchEngineConfiguration : IEntityTypeConfiguration<EngineType>
     {
-        public void Configure(EntityTypeBuilder<SearchEngine> builder)
+        public void Configure(EntityTypeBuilder<EngineType> builder)
         {
             builder.HasKey(e => e.Id);
         }
