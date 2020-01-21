@@ -2,33 +2,53 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Autofac;
+using Autofac.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Questor.Infrasctructure.Data;
 
 namespace Questor.Web
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IHostEnvironment environment)
         {
-            Configuration = configuration;
+            var configurationBuilder = new ConfigurationBuilder()
+                .SetBasePath(environment.ContentRootPath)
+                .AddJsonFile("appsettings.json", true, true)
+                .AddJsonFile($"appsettings.{environment.EnvironmentName}.json", true)
+                .AddEnvironmentVariables();
+            
+            this.Configuration = configurationBuilder.Build();
         }
 
         public IConfiguration Configuration { get; }
+        
+        public ILifetimeScope AutofacContainer {get; private set;}
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddOptions();
             services.AddControllersWithViews();
+            services.AddDbContext<QuestorContext>();
+        }
+
+        public void ConfigureContainer(ContainerBuilder builder)
+        {
+            builder.RegisterAssemblyModules(typeof(Startup).Assembly);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            this.AutofacContainer = app.ApplicationServices.GetAutofacRoot();
+            
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

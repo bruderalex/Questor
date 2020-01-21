@@ -1,4 +1,4 @@
-﻿namespace Questor.Core.Entities.Base
+﻿namespace Questor.Core.Data.Entities.Base
 {
     public class BaseEntity
     {

@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Questor.Core.Entities;
+using Questor.Core.Data.Entities;
 
 namespace Questor.Infrasctructure.Data.Configuration
 {

@@ -1,8 +1,18 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
     <PropertyGroup>
         <TargetFramework>netcoreapp3.1</TargetFramework>
     </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Autofac" Version="4.9.4" />
+      <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="5.0.1" />
+      <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.1.1" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Questor.Infrasctructure\Questor.Infrasctructure.csproj" />
+    </ItemGroup>
 
 
 </Project>

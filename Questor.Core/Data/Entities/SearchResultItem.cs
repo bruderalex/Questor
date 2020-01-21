@@ -1,6 +1,6 @@
-﻿using Questor.Core.Entities.Base;
+﻿using Questor.Core.Data.Entities.Base;
 
-namespace Questor.Core.Entities
+namespace Questor.Core.Data.Entities
 {
     public class SearchResultItem : BaseEntity
     {
