@@ -2,12 +2,13 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Questor.Core.Data.Entities;
+using Questor.Core.Services.Business;
 
 namespace Questor.Core.Services.Engines
 {
     public interface ISearchEngine
     {
-        public int EngineId {get;}
+        public SearchEngineType SearchEngineType {get;}
         
         string BaseUrl {get;}
         

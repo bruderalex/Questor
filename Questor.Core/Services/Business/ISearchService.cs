@@ -6,6 +6,6 @@ namespace Questor.Core.Services.Business
 {
     public interface ISearchService
     {
-        Task<SearchResult> SearchOnline(string question, IEnumerable<EngineType> enginesTypes = null);
+        Task<SearchResult> SearchOnline(string question, IEnumerable<SearchEngineType> searchEngineTypes = null);
     }
 }

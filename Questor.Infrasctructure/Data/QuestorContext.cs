@@ -15,8 +15,6 @@ namespace Questor.Infrasctructure.Data
         {
         }
 
-        public DbSet<EngineType> SearchEngines { get; set; }
-
         public DbSet<SearchResult> SearchResults { get; set; }
 
         public DbSet<SearchResultItem> SearchResultItems { get; set; }

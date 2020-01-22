@@ -22,10 +22,10 @@ namespace Questor.Web.Controllers
             this._searchService = searchService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var result = this._searchService.SearchOnline("123");
-            
+            var result = await this._searchService.SearchOnline("123", new List<SearchEngineType> {SearchEngineType.Yandex, SearchEngineType.DuckDuckGo});
+
             return View();
         }
 

@@ -1,4 +1,5 @@
 ﻿using Questor.Core.Data.Entities.Base;
+using Questor.Core.Services.Business;
 
 namespace Questor.Core.Data.Entities
 {
@@ -9,9 +10,8 @@ namespace Questor.Core.Data.Entities
             
         }
 
-        public SearchResultItem(EngineType engineType, string title, string content, string url)
+        public SearchResultItem(string title, string content, string url)
         {
-            this._engineType = engineType;
             this.Title = title;
             this.Content = content;
             this.Url = url;
@@ -22,15 +22,11 @@ namespace Questor.Core.Data.Entities
         public string Content { get; set; }
 
         public string Url { get; set; }
-
+        
         public int SearchResultId { get; set; }
 
         private SearchResult _searchResult;
         
         public SearchResult SearchResult => this._searchResult;
-        
-        private EngineType _engineType;
-        
-        public EngineType EngineType => this._engineType;
     }
 }

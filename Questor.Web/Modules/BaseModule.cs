@@ -1,8 +1,10 @@
 ﻿using Autofac;
 using Questor.Core.Auxiliary;
+using Questor.Core.Data;
 using Questor.Core.Services.Business;
 using Questor.Core.Services.Business.Impl;
 using Questor.Core.Services.Engines;
+using Questor.Infrasctructure.Data;
 using Questor.Infrasctructure.Logger;
 
 namespace Questor.Web.Modules
@@ -16,10 +18,16 @@ namespace Questor.Web.Modules
                 .AsImplementedInterfaces();
 
             builder.RegisterType<SearchService>()
-                .As<ISearchService>();
+                .As<ISearchService>()
+                .InstancePerDependency();
 
             builder.RegisterGeneric(typeof(Logger<>))
-                .As(typeof(IQuestorLogger<>));
+                .As(typeof(IQuestorLogger<>))
+                .InstancePerDependency();
+
+            builder.RegisterGeneric(typeof(QuestorRepository<>))
+                .As(typeof(IAsyncRepository<>))
+                .InstancePerLifetimeScope();
         }
     }
 }

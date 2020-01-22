@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using Questor.Core.Data;
 using Questor.Core.Data.Entities.Base;
 
@@ -14,29 +15,34 @@ namespace Questor.Infrasctructure.Data
             this._context = context;
         }
         
-        public Task<T> FindAsync(int id)
+        public async Task<T> FindAsync(int id)
         {
-            throw new System.NotImplementedException();
+            return await this._context.Set<T>().FindAsync(id);
         }
 
-        public Task<IReadOnlyList<T>> GetAllAsync()
+        public async Task<IReadOnlyList<T>> GetAllAsync()
         {
-            throw new System.NotImplementedException();
+            return await this._context.Set<T>().ToListAsync();
         }
 
-        public Task<T> AddAsync(T entity)
+        public async Task<T> AddAsync(T entity)
         {
-            throw new System.NotImplementedException();
+            await this._context.Set<T>().AddAsync(entity);
+            await this._context.SaveChangesAsync();
+            
+            return entity;
         }
 
-        public Task<T> UpdateAsync(T entity)
+        public async Task UpdateAsync(T entity)
         {
-            throw new System.NotImplementedException();
+            this._context.Entry(entity).State = EntityState.Modified;
+            await this._context.SaveChangesAsync();
         }
 
-        public Task<T> DeleteAsync(T entity)
+        public async Task DeleteAsync(T entity)
         {
-            throw new System.NotImplementedException();
+            this._context.Set<T>().Remove(entity);
+            await this._context.SaveChangesAsync();
         }
     }
 }

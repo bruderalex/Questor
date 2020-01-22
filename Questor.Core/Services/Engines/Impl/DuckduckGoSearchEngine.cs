@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
@@ -7,12 +8,17 @@ using Questor.Core.Auxiliary;
 using Questor.Core.Data;
 using Questor.Core.Data.Entities;
 using Questor.Core.Exceptions;
+using Questor.Core.Services.Business;
 
 namespace Questor.Core.Services.Engines.Impl
 {
     public class DuckduckGoSearchEngine : ISearchEngine
     {
         private readonly IQuestorLogger<DuckduckGoSearchEngine> _logger;
+
+        public string BaseUrl => "https://duckduckgo.com/html/";
+
+        public SearchEngineType SearchEngineType => SearchEngineType.DuckDuckGo;
 
         public DuckduckGoSearchEngine(IQuestorLogger<DuckduckGoSearchEngine> logger)
         {
@@ -27,10 +33,6 @@ namespace Questor.Core.Services.Engines.Impl
             };
         }
 
-        public int EngineId => 1;
-
-        public string BaseUrl => "https://duckduckgo.com/html/";
-
         private readonly Selector _selector;
 
         public Selector Selector => this._selector;
@@ -42,6 +44,9 @@ namespace Questor.Core.Services.Engines.Impl
 
             try
             {
+                var stopwatch = new Stopwatch();
+                stopwatch.Start();
+                
                 var baseUri = new Uri(BaseUrl);
 
                 var requestParams = new FormUrlEncodedContent(new[]
@@ -59,6 +64,9 @@ namespace Questor.Core.Services.Engines.Impl
 
                 var rawContent = await response.Content.ReadAsStringAsync();
 
+                this._logger.LogInfo($"{nameof(DuckduckGoSearchEngine)} search completed in {stopwatch.ElapsedMilliseconds}");
+                stopwatch.Stop();
+                
                 return new RawResult(rawContent, this);
             }
             catch (Exception ex)
