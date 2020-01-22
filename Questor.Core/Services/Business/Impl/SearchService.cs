@@ -41,7 +41,7 @@ namespace Questor.Core.Services.Business.Impl
                     .Where(engine => 
                         searchEngineTypes
                             .Any(engineType => 
-                                (int)engineType == engine.Key));// searchEngineTypes.Select(engineType => this.SearchEngines[(int)engineType]).ToList();
+                                (int)engineType == engine.Key));
 
             var engineSearchTasks = new List<Task<RawResult>>();
 
