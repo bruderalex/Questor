@@ -10,6 +10,8 @@ namespace Questor.Core.Services.Business
         
         Yandex = 2,
         
-        Bing = 3
+        Bing = 3,
+        
+        Google = 4
     }
 }

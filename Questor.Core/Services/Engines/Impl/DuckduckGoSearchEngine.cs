@@ -67,12 +67,12 @@ namespace Questor.Core.Services.Engines.Impl
                 this._logger.LogInfo($"{nameof(DuckduckGoSearchEngine)} search completed in {stopwatch.ElapsedMilliseconds}");
                 stopwatch.Stop();
                 
-                return new RawResult(rawContent, this);
+                return new RawResult(rawContent, this.SearchEngineType);
             }
             catch (Exception ex)
             {
                 this._logger.LogError(ex, $"response to {nameof(DuckduckGoSearchEngine)} failed");
-                return new RawResult(string.Empty, this);
+                return new RawResult(string.Empty, this.SearchEngineType);
             }
         }
     }

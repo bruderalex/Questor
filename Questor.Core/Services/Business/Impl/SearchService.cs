@@ -15,11 +15,16 @@ namespace Questor.Core.Services.Business.Impl
         private Dictionary<int, ISearchEngine> SearchEngines { get; }
 
         private readonly IAsyncRepository<SearchResult> _searchResultRepository;
+        
+        private readonly ISearchResponseParser _searchResponseParser;
 
-        public SearchService(IEnumerable<ISearchEngine> searchEngines, IAsyncRepository<SearchResult> searchResultRepository)
+        public SearchService(IEnumerable<ISearchEngine> searchEngines, 
+            IAsyncRepository<SearchResult> searchResultRepository,
+            ISearchResponseParser searchResponseParser)
         {
             this._searchResultRepository = searchResultRepository;
-
+            this._searchResponseParser = searchResponseParser;
+            
             this.SearchEngines =
                 searchEngines.GroupBy(engine => (int)engine.SearchEngineType)
                     .ToDictionary(g => g.Key, g => g.FirstOrDefault());
@@ -30,53 +35,36 @@ namespace Questor.Core.Services.Business.Impl
             if (string.IsNullOrWhiteSpace(question))
                 throw new ArgumentNullException(nameof(question));
 
-            var engines = searchEngineTypes == null
-                ? this.SearchEngines.Values.ToList()
-                : searchEngineTypes.Select(engineType => this.SearchEngines[(int)engineType]).ToList();
+            var searchEngines = searchEngineTypes == null
+                ? this.SearchEngines
+                : this.SearchEngines
+                    .Where(engine => 
+                        searchEngineTypes
+                            .Any(engineType => 
+                                (int)engineType == engine.Key));// searchEngineTypes.Select(engineType => this.SearchEngines[(int)engineType]).ToList();
 
             var engineSearchTasks = new List<Task<RawResult>>();
 
             var tokenSource = new CancellationTokenSource();
             var token = tokenSource.Token;
 
-            foreach (var engine in engines)
+            foreach (var pair in searchEngines)
             {
-                engineSearchTasks.Add(engine.Search(question, token));
+                engineSearchTasks.Add(pair.Value.Search(question, token));
             }
 
             var completedSearchTask = await Task.WhenAny(engineSearchTasks);
             var rawResult = await completedSearchTask;
-            //tokenSource.Cancel();
+            tokenSource.Cancel();
 
-            return await ParseRawResult(rawResult, question);
-        }
-
-        private async Task<SearchResult> ParseRawResult(RawResult rawResult, string question)
-        {
-            if (rawResult == null)
-                throw new ArgumentNullException(nameof(rawResult));
-
-            if (rawResult.SearchEngine == null)
-                throw new ArgumentNullException(nameof(rawResult.SearchEngine));
-
-            var browsingContext = BrowsingContext.New();
-            var document = await browsingContext.OpenAsync(request => request.Content(rawResult.Content));
-            var links = document.QuerySelectorAll(rawResult.SearchEngine.Selector.Links).Take(10);
-            var items = new List<SearchResultItem>();
-
-            foreach (var link in links)
-            {
-                var url = link.QuerySelector(rawResult.SearchEngine.Selector.Url)?.GetAttribute("href");
-                var title = link.QuerySelector(rawResult.SearchEngine.Selector.Title)?.TextContent;
-                var content = link.QuerySelector(rawResult.SearchEngine.Selector.Text)?.TextContent;
-
-                items.Add(new SearchResultItem(title, content, url));
-            }
-
-            var searchResult = new SearchResult(question, items, DateTime.Now, rawResult.SearchEngine);
-
+            var parsedItems = 
+                await this._searchResponseParser
+                .ParseRawResponse(rawResult);
+            
+            var searchResult = new SearchResult(question, parsedItems, DateTime.Now, rawResult.SearchEngineType);
+            
             await this._searchResultRepository.AddAsync(searchResult);
-
+            
             return searchResult;
         }
     }

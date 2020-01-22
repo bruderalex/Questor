@@ -24,7 +24,7 @@ namespace Questor.Web.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var result = await this._searchService.SearchOnline("123", new List<SearchEngineType> {SearchEngineType.Yandex, SearchEngineType.DuckDuckGo});
+            var result = await this._searchService.SearchOnline("warhammer", new List<SearchEngineType> {SearchEngineType.Google});
 
             return View();
         }
