@@ -7,7 +7,7 @@ namespace Questor.Infrasctructure.Mediator
 {
     public class SearchCommand : IRequest<SearchResult>
     {
-        public SearchCommand(string question, List<SearchEngineType> engineTypes = null)
+        public SearchCommand(string question, IEnumerable<SearchEngineTypeEnum> engineTypes = null)
         {
             this.Question = question;
             this.EngineTypes = engineTypes;
@@ -15,6 +15,6 @@ namespace Questor.Infrasctructure.Mediator
         
         public string Question {get;set;}
         
-        public List<SearchEngineType> EngineTypes {get;set;}
+        public IEnumerable<SearchEngineTypeEnum> EngineTypes {get;set;}
     }
 }

@@ -5,13 +5,13 @@ namespace Questor.Core.Services.Engines
 {
     public class RawResult
     {
-        public RawResult(string content, SearchEngineType engineType)
+        public RawResult(string content, SearchEngineTypeEnum engineTypeEnum)
         {
             this.Content = content;
-            this.SearchEngineType = engineType;
+            this.SearchEngineTypeEnum = engineTypeEnum;
         }
         
-        public SearchEngineType SearchEngineType {get;}
+        public SearchEngineTypeEnum SearchEngineTypeEnum {get;}
         
         public string Content {get; }
     }

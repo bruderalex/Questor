@@ -14,7 +14,7 @@ namespace Questor.Core.Services.Engines.Impl
 
         public string BaseUrl => "https://google.com/";
 
-        public SearchEngineType SearchEngineType => SearchEngineType.Google;
+        public SearchEngineTypeEnum SearchEngineTypeEnum => SearchEngineTypeEnum.Google;
 
         private readonly Selector _selector;
 
@@ -51,12 +51,12 @@ namespace Questor.Core.Services.Engines.Impl
 
                 var rawContent = await response.Content.ReadAsStringAsync();
 
-                return new RawResult(rawContent, this.SearchEngineType);
+                return new RawResult(rawContent, this.SearchEngineTypeEnum);
             }
             catch (Exception ex)
             {
                 this._logger.LogError(ex, $"response to {nameof(GoogleSearchEngine)} failed");
-                return new RawResult(string.Empty, this.SearchEngineType);
+                return new RawResult(string.Empty, this.SearchEngineTypeEnum);
             }
         }
     }

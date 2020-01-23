@@ -25,10 +25,10 @@ namespace Questor.Core.Services.Engines.Impl
 
             var searchEngine =
                 this._searchEngines
-                    .FirstOrDefault(engine => engine.SearchEngineType == rawResult.SearchEngineType);
+                    .FirstOrDefault(engine => engine.SearchEngineTypeEnum == rawResult.SearchEngineTypeEnum);
 
             if (searchEngine == null)
-                throw new UnknownSearchEngineException(Enum.GetName(typeof(SearchEngineType), rawResult.SearchEngineType));
+                throw new UnknownSearchEngineException(Enum.GetName(typeof(SearchEngineTypeEnum), rawResult.SearchEngineTypeEnum));
 
             var browsingContext = BrowsingContext.New();
             var document = await browsingContext.OpenAsync(request => request.Content(rawResult.Content));

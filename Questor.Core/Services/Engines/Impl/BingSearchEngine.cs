@@ -14,7 +14,7 @@ namespace Questor.Core.Services.Engines.Impl
 
         public string BaseUrl => "https://bing.com/";
 
-        public SearchEngineType SearchEngineType => SearchEngineType.Bing;
+        public SearchEngineTypeEnum SearchEngineTypeEnum => SearchEngineTypeEnum.Bing;
 
         public BingSearchEngine(IQuestorLogger<BingSearchEngine> logger)
         {
@@ -43,6 +43,10 @@ namespace Questor.Core.Services.Engines.Impl
                 var baseUri = new Uri($"{BaseUrl}search?q={question}");
 
                 using var httpClient = new HttpClient();
+                httpClient.DefaultRequestHeaders.Add("User-Agent", @"Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:72.0) Gecko/20100101 Firefox/72.0");
+                httpClient.DefaultRequestHeaders.Add("Accept", @"text/html,application/xhtml+xml,application/xml");
+                httpClient.DefaultRequestHeaders.Add("Upgrade-Insecure-Requests", @"1");
+                httpClient.DefaultRequestHeaders.Add("TE", @"Trailers");
                 var response = await httpClient.GetAsync(baseUri, cancellationToken);
 
                 if (!response.IsSuccessStatusCode)
@@ -50,12 +54,12 @@ namespace Questor.Core.Services.Engines.Impl
 
                 var rawContent = await response.Content.ReadAsStringAsync();
 
-                return new RawResult(rawContent, this.SearchEngineType);
+                return new RawResult(rawContent, this.SearchEngineTypeEnum);
             }
             catch (Exception ex)
             {
                 this._logger.LogError(ex, $"response to {nameof(BingSearchEngine)} failed");
-                return new RawResult(string.Empty, this.SearchEngineType);
+                return new RawResult(string.Empty, this.SearchEngineTypeEnum);
             }
         }
     }

@@ -6,14 +6,27 @@
 
 <div class="text-center">
     <h1 class="display-4 display-2">Questor Project</h1>
-
     @using (Html.BeginForm("Search", "Home", FormMethod.Post))
     {
+        <div class="d-inline-block float-left">
+            @if (Model != null)
+            {
+                @for (var i = 0; i < Model.SelectedEngines.Count; i++)
+                {
+                    <div class="d-inline-block mr-1">
+                        @Html.HiddenFor(model => model.SelectedEngines[i].Id)
+                        @Html.HiddenFor(model => model.SelectedEngines[i].Name)
+                        @Html.CheckBoxFor(model => model.SelectedEngines[i].Checked)
+                        @Html.LabelFor(model => model.SelectedEngines[i].Checked, Model.SelectedEngines[i].Name)
+                    </div>
+                }
+            }
+        </div>
         <div class="row" style="min-width: 77em">
             <div class="input-group">
-                <input class="form-control input-lg border-right-0 border" placeholder="Search..." id="search-input" name="question">
+                <input class="form-control input-lg border-right-0 border" placeholder="Search..." id="search-input" name="question" value="@Model.Question">
                 <span class="input-group-append">
-                    <button class="btn-primary btn btn-outline-secondary border-left-0 border" type="submit">
+                    <button class="btn-primary btn btn-outline-secondary border-left-0 border" type="submit" id="search-button">
                         <i class="fa fa-search"></i>
                     </button>
                 </span>
@@ -25,6 +38,7 @@
     <div class="d-block">
         @if (Model != null)
         {
+            <h3 class="display-4">@Model.EngineTypeName</h3>
             @foreach (var item in Model.SearchResultItems)
             {
                 <div class="card card-solid">
@@ -41,3 +55,16 @@
         }
     </div>
 </div>
+
+
+@section Scripts
+{
+    <script type="text/javascript">
+$(document).ready(function(){
+    //$('#search-button').prop('disabled',true);
+    $('#search-input').keyup(function(){
+        $('#search-button').prop('disabled', this.value == "" ? true : false);     
+    })
+});  
+</script>
+}

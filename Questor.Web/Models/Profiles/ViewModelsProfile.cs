@@ -13,7 +13,7 @@ namespace Questor.Web.Models.Profiles
                 .ForMember(dest =>
                         dest.EngineTypeName,
                     cfg =>
-                        cfg.MapFrom(src => Enum.GetName(typeof(SearchEngineType), src.SearchEngineType)));
+                        cfg.MapFrom(src => Enum.GetName(typeof(SearchEngineTypeEnum), src.SearchEngineTypeEnum)));
         }
     }
 }

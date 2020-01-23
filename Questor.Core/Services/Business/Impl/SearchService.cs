@@ -26,11 +26,11 @@ namespace Questor.Core.Services.Business.Impl
             this._searchResponseParser = searchResponseParser;
             
             this.SearchEngines =
-                searchEngines.GroupBy(engine => (int)engine.SearchEngineType)
+                searchEngines.GroupBy(engine => (int)engine.SearchEngineTypeEnum)
                     .ToDictionary(g => g.Key, g => g.FirstOrDefault());
         }
 
-        public async Task<SearchResult> SearchOnline(string question, IEnumerable<SearchEngineType> searchEngineTypes = null)
+        public async Task<SearchResult> SearchOnline(string question, IEnumerable<SearchEngineTypeEnum> searchEngineTypes = null)
         {
             if (string.IsNullOrWhiteSpace(question))
                 throw new ArgumentNullException(nameof(question));
@@ -61,7 +61,7 @@ namespace Questor.Core.Services.Business.Impl
                 await this._searchResponseParser
                 .ParseRawResponse(rawResult);
             
-            var searchResult = new SearchResult(question, parsedItems, DateTime.Now, rawResult.SearchEngineType);
+            var searchResult = new SearchResult(question, parsedItems, DateTime.Now, rawResult.SearchEngineTypeEnum);
             
             await this._searchResultRepository.AddAsync(searchResult);
             

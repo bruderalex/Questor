@@ -30,12 +30,12 @@ namespace Questor.Web.Controllers
 
         public async Task<IActionResult> Index()
         {
-            return View();
+            return View(new SearchResultVm());
         }
 
         public async Task<IActionResult> Search([FromForm]StartSearchDto startSearchDto)
         {
-            var searchCommand = new SearchCommand(startSearchDto.Question, new List<SearchEngineType> {SearchEngineType.Google});
+            var searchCommand = new SearchCommand(startSearchDto.Question, startSearchDto.SearchEngineTypes);
 
             var searchResult = await this._mediator.Send(searchCommand);
 

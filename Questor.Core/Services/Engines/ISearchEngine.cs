@@ -8,7 +8,7 @@ namespace Questor.Core.Services.Engines
 {
     public interface ISearchEngine
     {
-        public SearchEngineType SearchEngineType {get;}
+        public SearchEngineTypeEnum SearchEngineTypeEnum {get;}
         
         string BaseUrl {get;}
         

@@ -16,7 +16,7 @@ namespace Questor.Core.Services.Engines.Impl
 
         public string BaseUrl => "https://yandex.ru/";
 
-        public SearchEngineType SearchEngineType => SearchEngineType.Yandex;
+        public SearchEngineTypeEnum SearchEngineTypeEnum => SearchEngineTypeEnum.Yandex;
 
         public YandexSearchEngine(IQuestorLogger<YandexSearchEngine> logger)
         {
@@ -48,6 +48,7 @@ namespace Questor.Core.Services.Engines.Impl
                 var baseUri = new Uri($"{BaseUrl}search?text={question}");
 
                 using var httpClient = new HttpClient();
+                httpClient.DefaultRequestHeaders.Add("User-Agent", @"Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:72.0) Gecko/20100101 Firefox/72.0");
                 var response = await httpClient.GetAsync(baseUri, cancellationToken);
 
                 if (!response.IsSuccessStatusCode)
@@ -58,12 +59,12 @@ namespace Questor.Core.Services.Engines.Impl
                 this._logger.LogInfo($"{nameof(YandexSearchEngine)}: search completed in {stopwatch.ElapsedMilliseconds}");
                 stopwatch.Stop();
 
-                return new RawResult(rawContent, this.SearchEngineType);
+                return new RawResult(rawContent, this.SearchEngineTypeEnum);
             }
             catch (Exception ex)
             {
                 this._logger.LogError(ex, $"response to {nameof(YandexSearchEngine)} failed");
-                return new RawResult(string.Empty, this.SearchEngineType);
+                return new RawResult(string.Empty, this.SearchEngineTypeEnum);
             }
         }
     }

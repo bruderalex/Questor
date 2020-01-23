@@ -18,7 +18,7 @@ namespace Questor.Core.Services.Engines.Impl
 
         public string BaseUrl => "https://duckduckgo.com/html/";
 
-        public SearchEngineType SearchEngineType => SearchEngineType.DuckDuckGo;
+        public SearchEngineTypeEnum SearchEngineTypeEnum => SearchEngineTypeEnum.DuckDuckGo;
 
         public DuckduckGoSearchEngine(IQuestorLogger<DuckduckGoSearchEngine> logger)
         {
@@ -67,12 +67,12 @@ namespace Questor.Core.Services.Engines.Impl
                 this._logger.LogInfo($"{nameof(DuckduckGoSearchEngine)} search completed in {stopwatch.ElapsedMilliseconds}");
                 stopwatch.Stop();
                 
-                return new RawResult(rawContent, this.SearchEngineType);
+                return new RawResult(rawContent, this.SearchEngineTypeEnum);
             }
             catch (Exception ex)
             {
                 this._logger.LogError(ex, $"response to {nameof(DuckduckGoSearchEngine)} failed");
-                return new RawResult(string.Empty, this.SearchEngineType);
+                return new RawResult(string.Empty, this.SearchEngineTypeEnum);
             }
         }
     }
