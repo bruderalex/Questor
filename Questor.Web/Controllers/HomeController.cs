@@ -3,10 +3,14 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Questor.Core.Services.Business;
 using Questor.Core.Services.Engines;
+using Questor.Infrasctructure.Mediator;
+using Questor.Web.Dto;
 using Questor.Web.Models;
 
 namespace Questor.Web.Controllers
@@ -14,19 +18,30 @@ namespace Questor.Web.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly ISearchService _searchService;
+        private readonly IMediator _mediator;
+        private readonly IMapper _mapper;
 
-        public HomeController(ILogger<HomeController> logger, ISearchService searchService)
+        public HomeController(ILogger<HomeController> logger, IMediator mediator, IMapper mapper)
         {
             this._logger = logger;
-            this._searchService = searchService;
+            this._mediator = mediator;
+            this._mapper = mapper;
         }
 
         public async Task<IActionResult> Index()
         {
-            var result = await this._searchService.SearchOnline("warhammer", new List<SearchEngineType> {SearchEngineType.Google});
-
             return View();
+        }
+
+        public async Task<IActionResult> Search([FromForm]StartSearchDto startSearchDto)
+        {
+            var searchCommand = new SearchCommand(startSearchDto.Question, new List<SearchEngineType> {SearchEngineType.Google});
+
+            var searchResult = await this._mediator.Send(searchCommand);
+
+            var searchResultsVm = this._mapper.Map<SearchResultVm>(searchResult);
+            
+            return View("Index", searchResultsVm);
         }
 
         public IActionResult Privacy()

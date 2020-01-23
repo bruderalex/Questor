@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
+using AutoMapper;
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -38,6 +40,8 @@ namespace Questor.Web
             services.AddOptions();
             services.AddControllersWithViews();
             services.AddDbContext<QuestorContext>(); 
+            services.AddMediatR(typeof(QuestorContext).Assembly);
+            services.AddAutoMapper(typeof(Startup).Assembly);
         }
 
         public void ConfigureContainer(ContainerBuilder builder)
