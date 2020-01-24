@@ -7,13 +7,17 @@ using Questor.Core.Services.Business;
 
 namespace Questor.Web.Models
 {
+    [Serializable]
     public class SearchResultVm
     {
         public SearchResultVm()
         {
+        }
+
+        public void InitializeSelectedEngines()
+        {
             this.SelectedEngines =
-                Enum
-                    .GetValues(typeof(SearchEngineTypeEnum))
+                Enum.GetValues(typeof(SearchEngineTypeEnum))
                     .Cast<SearchEngineTypeEnum>()
                     .Select(engineType => new SelectedEngineVm
                     {
@@ -32,9 +36,10 @@ namespace Questor.Web.Models
 
         public string EngineTypeName { get; set; }
 
-        public IList<SelectedEngineVm> SelectedEngines { get; set; }
+        public IList<SelectedEngineVm> SelectedEngines { get; set; } = new List<SelectedEngineVm>();
     }
 
+    [Serializable]
     public class SelectedEngineVm
     {
         public int Id { get; set; }

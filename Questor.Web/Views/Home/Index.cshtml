@@ -29,9 +29,9 @@
         </div>
         <div class="row" style="min-width: 77em">
             <div class="input-group">
-                <input class="form-control input-lg border-right-0 border" placeholder="Search..." id="search-input" name="question" value="@Model.Question">
+                <input class="form-control input-lg border-right-0 border" placeholder="Search..." id="search-input" name="question" value="@Model?.Question">
                 <span class="input-group-append">
-                    <button class="btn-primary btn btn-outline-secondary border-left-0 border" type="button" id="search-button">
+                    <button class="btn-primary btn btn-outline-secondary border-left-0 border" type="submit" id="search-button">
                         <i class="fa fa-search"></i>
                     </button>
                 </span>
@@ -70,18 +70,23 @@ $(document).ready(function(){
     
     $('#search-input').keyup(function(){
         $('#search-button').prop('disabled', this.value === "");     
-    })
-});  
+    });
+    
+    // $('#search-form').submit(function(e) {
+    //     e.preventDefault();
+    // })
+});     
 
- $('#search-button').click(function () {
-                $('#loading-div-background').show();
-                $.ajax({
-                    type: 'POST',
-                    url: '/home/search',
-                    data: $('#search-form').serialize()
-                }).done(function(){
-                    $('#loading-div-background').hide();
-                });
-            });
+ // $('#search-button').click(function () {
+ //                $('#loading-div-background').show();
+ //                $.ajax({
+ //                    type: 'POST',
+ //                    url: '/home/search',
+ //                    data: $('#search-form').serialize(),
+ //                    processData: true,
+ //                }).done(function(){
+ //                    $('#loading-div-background').hide();
+ //                });
+ //            });
 </script>
 }

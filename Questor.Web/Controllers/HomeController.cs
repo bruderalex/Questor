@@ -2,13 +2,18 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Questor.Core.Data;
+using Questor.Core.Data.Entities;
 using Questor.Core.Services.Business;
 using Questor.Core.Services.Engines;
+using Questor.Infrasctructure.Data;
 using Questor.Infrasctructure.Mediator;
 using Questor.Web.Dto;
 using Questor.Web.Models;
@@ -20,17 +25,32 @@ namespace Questor.Web.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly IMediator _mediator;
         private readonly IMapper _mapper;
+        private readonly IAsyncRepository<SearchResult> _searchRepo;
 
-        public HomeController(ILogger<HomeController> logger, IMediator mediator, IMapper mapper)
+        public HomeController(ILogger<HomeController> logger, IMediator mediator, IMapper mapper, IAsyncRepository<SearchResult> searchRepo)
         {
             this._logger = logger;
             this._mediator = mediator;
             this._mapper = mapper;
+            this._searchRepo = searchRepo;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string id)
         {
-            return View(new SearchResultVm());
+            var vm = new SearchResultVm();
+            vm.InitializeSelectedEngines();
+
+            if (!string.IsNullOrWhiteSpace(id))
+            {
+                var result = await this._searchRepo.FindAsync(int.Parse(id));
+                if (result != null)
+                {
+                    vm = this._mapper.Map<SearchResultVm>(result);
+                    vm.InitializeSelectedEngines();
+                }
+            }
+
+            return View(vm);
         }
 
         [HttpPost]
@@ -40,21 +60,7 @@ namespace Questor.Web.Controllers
 
             var searchResult = await this._mediator.Send(searchCommand);
 
-            var searchResultsVm = this._mapper.Map<SearchResultVm>(searchResult);
-            
-            return View("Index", searchResultsVm);
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> Mark([FromForm] string question)
-        {
-            await Task.Delay(5000);
-            return View("Index", new SearchResultVm());
-        }
-
-        public IActionResult Privacy()
-        {
-            return View();
+            return RedirectToAction("Index", new {id = searchResult.Id});
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
