@@ -12,14 +12,17 @@ namespace Questor.Core.Data.Entities
         {
         }
 
-        public SearchResult(string question, IEnumerable<SearchResultItem> searchResultItems, DateTime searchDate)
+        public SearchResult(string question, IEnumerable<SearchResultItem> searchResultItems, DateTime searchDate, SearchEngineTypeEnum engineTypeEnum)
         {
             this.Question = question;
             this.Date = searchDate;
             this._searchResultItems.AddRange(searchResultItems);
+            this.EngineTypeEnum = engineTypeEnum;
         }
 
         public string Question { get; }
+
+        public SearchEngineTypeEnum EngineTypeEnum { get; }
 
         public DateTime Date { get; }
 

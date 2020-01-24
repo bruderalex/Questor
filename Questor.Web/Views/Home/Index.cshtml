@@ -39,54 +39,37 @@
         </div>
         <p/>
     }
-
-    <div class="d-block">
-        @if (Model != null)
-        {
-            <h3 class="display-4">@Model.EngineTypeName</h3>
-            @foreach (var item in Model.SearchResultItems)
-            {
-                <div class="card card-solid">
-                    <div class="card-body text-left">
-                        <h5 class="card-title">
-                            <span class="font-weight-bold">@item.Title</span>
-                        </h5>
-                        <a href="@item.Url" class="card-link">@item.Url</a>
-                        <p class="card-text">@item.Content</p>
-                    </div>
-                </div>
-                <p/>
-            }
-        }
-    </div>
+    <div id="results"/>
 </div>
-
 
 @section Scripts
 {
     <script type="text/javascript">
-$(document).ready(function(){
-    $('#loading-div-background').hide();
+        $(document).ready(function(){
+            $('#loading-div-background').hide();
     
-    $('#search-input').keyup(function(){
-        $('#search-button').prop('disabled', this.value === "");     
-    });
+          $('#search-input').keyup(function(){
+            $('#search-button').prop('disabled', this.value === "");     
+          });
     
-    // $('#search-form').submit(function(e) {
-    //     e.preventDefault();
-    // })
-});     
+          $('#search-form').submit(function(e) {
+            e.preventDefault();
+            })
+        });     
 
- // $('#search-button').click(function () {
- //                $('#loading-div-background').show();
- //                $.ajax({
- //                    type: 'POST',
- //                    url: '/home/search',
- //                    data: $('#search-form').serialize(),
- //                    processData: true,
- //                }).done(function(){
- //                    $('#loading-div-background').hide();
- //                });
- //            });
+        $('#search-button').click(function () {
+                $('#loading-div-background').show();
+                $.ajax({
+                    type: 'POST',
+                    url: '/home/search',
+                    data: $('#search-form').serialize(),
+                    processData: true,
+                    success: function(data) {
+                        $('#results').html(data);
+                    }
+                }).done(function(){
+                    $('#loading-div-background').hide();
+                });
+            });
 </script>
 }

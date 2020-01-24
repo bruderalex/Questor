@@ -61,7 +61,7 @@ namespace Questor.Core.Services.Business.Impl
                 await this._searchResponseParser
                 .ParseRawResponse(rawResult);
             
-            var searchResult = new SearchResult(question, parsedItems, DateTime.Now);
+            var searchResult = new SearchResult(question, parsedItems, DateTime.Now, rawResult.SearchEngineTypeEnum);
             
             await this._searchResultRepository.AddAsync(searchResult);
             

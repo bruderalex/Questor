@@ -7,17 +7,17 @@ namespace Questor.Infrasctructure.Data
 {
     public class SearchResultRepository : QuestorRepository<SearchResult>
     {
-        private readonly IAsyncRepository<SearchResultItem> _itemsRepository;
-        
-        public SearchResultRepository(QuestorContext context, IAsyncRepository<SearchResultItem> itemsRepository) : 
+        public SearchResultRepository(QuestorContext context) : 
             base(context)
         {
-            this._itemsRepository = itemsRepository;
         }
 
         public override async Task<SearchResult> FindAsync(int id)
         {
-            var searchResult = this._context.SearchResults.Include(r => r.SearchResultItems).FirstOrDefaultAsync(r => r.Id == id);
+            var searchResult = 
+                this._context.SearchResults.Include(searchResult => searchResult.SearchResultItems)
+                    .FirstOrDefaultAsync(searchResult => searchResult.Id == id);
+            
             return await searchResult;
         }
     }
