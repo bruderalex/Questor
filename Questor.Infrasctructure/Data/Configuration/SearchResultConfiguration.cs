@@ -9,14 +9,14 @@ namespace Questor.Infrasctructure.Data.Configuration
         public void Configure(EntityTypeBuilder<SearchResult> builder)
         {
             builder.HasKey(e => e.Id);
-
+            
+            builder.Property(e => e.Id);
+            
             builder.Property(e => e.Question)
                 .IsRequired();
 
             builder.Property(e => e.Date)
                 .IsRequired();
-
-            builder.Ignore(e => e.SearchEngineTypeEnum);
 
             var navItem = builder.Metadata.FindNavigation(nameof(SearchResult.SearchResultItems));
             navItem.SetPropertyAccessMode(PropertyAccessMode.Field);

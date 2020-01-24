@@ -12,11 +12,10 @@ namespace Questor.Core.Data.Entities
         {
         }
 
-        public SearchResult(string question, IEnumerable<SearchResultItem> searchResultItems, DateTime searchDate, SearchEngineTypeEnum searchEngineTypeEnum)
+        public SearchResult(string question, IEnumerable<SearchResultItem> searchResultItems, DateTime searchDate)
         {
             this.Question = question;
             this.Date = searchDate;
-            this.SearchEngineTypeEnum = searchEngineTypeEnum;
             this._searchResultItems.AddRange(searchResultItems);
         }
 
@@ -25,8 +24,6 @@ namespace Questor.Core.Data.Entities
         public DateTime Date { get; }
 
         private readonly List<SearchResultItem> _searchResultItems = new List<SearchResultItem>();
-
-        public SearchEngineTypeEnum SearchEngineTypeEnum { get; private set; }
 
         public IReadOnlyCollection<SearchResultItem> SearchResultItems => this._searchResultItems.AsReadOnly();
     }

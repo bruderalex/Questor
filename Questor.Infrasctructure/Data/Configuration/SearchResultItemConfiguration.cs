@@ -10,6 +10,8 @@ namespace Questor.Infrasctructure.Data.Configuration
         public void Configure(EntityTypeBuilder<SearchResultItem> builder)
         {
             builder.HasKey(e => e.Id);
+            
+            builder.Property(e => e.Id);
 
             builder.Property(sri => sri.Url)
                 .IsRequired();

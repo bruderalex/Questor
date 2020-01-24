@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using Questor.Core.Auxiliary;
 using Questor.Core.Data;
+using Questor.Core.Data.Entities;
 using Questor.Core.Services.Business;
 using Questor.Core.Services.Business.Impl;
 using Questor.Core.Services.Engines;
@@ -33,6 +34,10 @@ namespace Questor.Web.Modules
             builder.RegisterGeneric(typeof(QuestorRepository<>))
                 .As(typeof(IAsyncRepository<>))
                 .InstancePerLifetimeScope();
+            
+            builder.RegisterType<SearchResultRepository>()
+                .As<IAsyncRepository<SearchResult>>()
+                .InstancePerDependency();
         }
     }
 }

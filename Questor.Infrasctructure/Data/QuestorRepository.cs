@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Questor.Core.Data;
@@ -15,7 +17,7 @@ namespace Questor.Infrasctructure.Data
             this._context = context;
         }
         
-        public async Task<T> FindAsync(int id)
+        public virtual async Task<T> FindAsync(int id)
         {
             return await this._context.Set<T>().FindAsync(id);
         }
@@ -43,6 +45,11 @@ namespace Questor.Infrasctructure.Data
         {
             this._context.Set<T>().Remove(entity);
             await this._context.SaveChangesAsync();
+        }
+
+        public async Task<IEnumerable<T>> GetListAsync(Func<T, bool> predicate)
+        {
+            return this._context.Set<T>().Where(predicate).ToList();
         }
     }
 }

@@ -43,7 +43,7 @@ namespace Questor.Web
             services.AddMediatR(typeof(QuestorContext).Assembly);
             services.AddAutoMapper(typeof(Startup).Assembly);
         }
-
+    
         public void ConfigureContainer(ContainerBuilder builder)
         {
             builder.RegisterAssemblyModules(typeof(Startup).Assembly);

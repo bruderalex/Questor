@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Questor.Core.Data.Entities.Base;
 
@@ -15,5 +16,7 @@ namespace Questor.Core.Data
         Task UpdateAsync(T entity);
         
         Task DeleteAsync(T entity);
+        
+        Task<IEnumerable<T>> GetListAsync(Func<T, bool> predicate);
     }
 }

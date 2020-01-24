@@ -9,11 +9,7 @@ namespace Questor.Web.Models.Profiles
     {
         public ViewModelsProfile()
         {
-            CreateMap<SearchResult, SearchResultVm>()
-                .ForMember(dest =>
-                        dest.EngineTypeName,
-                    cfg =>
-                        cfg.MapFrom(src => Enum.GetName(typeof(SearchEngineTypeEnum), src.SearchEngineTypeEnum)));
+            CreateMap<SearchResult, SearchResultVm>();
         }
     }
 }
