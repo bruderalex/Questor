@@ -65,6 +65,17 @@ button.accept-policy {
     width: 100%;
 }
 
+.overlay {
+    opacity: 0.8;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: #e9e9e9;
+    position: absolute;
+    z-index: 100;
+}
+
 #sidebar {
     width: 200px;
     position: absolute;
@@ -132,4 +143,11 @@ html {
 
 .head {
     max-height: 4em;
+}
+
+.centring {
+    position: relative;
+    top: 50%;
+    margin: auto;
+    max-height: 1vh;
 }

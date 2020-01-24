@@ -5,8 +5,13 @@
 }
 
 <div class="text-center">
+    <div id="loading-div-background" class="h-100 overlay">
+        <div class="h-100 align-items-center centring">
+            <i class="fa fa-spinner fa-spin fa-5x fa-fw"></i>
+        </div>
+    </div>
     <h1 class="display-4 display-2">Questor Project</h1>
-    @using (Html.BeginForm("Search", "Home", FormMethod.Post))
+    @using (Html.BeginForm("Search", "Home", FormMethod.Post, new {id = "search-form"}))
     {
         <div class="d-inline-block float-left">
             @if (Model != null)
@@ -26,7 +31,7 @@
             <div class="input-group">
                 <input class="form-control input-lg border-right-0 border" placeholder="Search..." id="search-input" name="question" value="@Model.Question">
                 <span class="input-group-append">
-                    <button class="btn-primary btn btn-outline-secondary border-left-0 border" type="submit" id="search-button">
+                    <button class="btn-primary btn btn-outline-secondary border-left-0 border" type="button" id="search-button">
                         <i class="fa fa-search"></i>
                     </button>
                 </span>
@@ -61,10 +66,22 @@
 {
     <script type="text/javascript">
 $(document).ready(function(){
-    //$('#search-button').prop('disabled',true);
+    $('#loading-div-background').hide();
+    
     $('#search-input').keyup(function(){
-        $('#search-button').prop('disabled', this.value == "" ? true : false);     
+        $('#search-button').prop('disabled', this.value === "");     
     })
 });  
+
+ $('#search-button').click(function () {
+                $('#loading-div-background').show();
+                $.ajax({
+                    type: 'POST',
+                    url: '/home/search',
+                    data: $('#search-form').serialize()
+                }).done(function(){
+                    $('#loading-div-background').hide();
+                });
+            });
 </script>
 }

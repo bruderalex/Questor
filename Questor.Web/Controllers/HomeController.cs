@@ -33,6 +33,7 @@ namespace Questor.Web.Controllers
             return View(new SearchResultVm());
         }
 
+        [HttpPost]
         public async Task<IActionResult> Search([FromForm]StartSearchDto startSearchDto)
         {
             var searchCommand = new SearchCommand(startSearchDto.Question, startSearchDto.SearchEngineTypes);
@@ -42,6 +43,13 @@ namespace Questor.Web.Controllers
             var searchResultsVm = this._mapper.Map<SearchResultVm>(searchResult);
             
             return View("Index", searchResultsVm);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Mark([FromForm] string question)
+        {
+            await Task.Delay(5000);
+            return View("Index", new SearchResultVm());
         }
 
         public IActionResult Privacy()
