@@ -26,9 +26,14 @@ namespace Questor.Web
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder
+                        .UseKestrel(op =>
+                        {
+                            op.ListenAnyIP(80);
+                            op.ListenAnyIP(81);
+                        })
                         .UseContentRoot(Directory.GetCurrentDirectory())
-                        .UseStartup<Startup>()
-                        .UseKestrel();
+                        .UseIISIntegration()
+                        .UseStartup<Startup>();
                 });
     }
 }

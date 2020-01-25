@@ -58,11 +58,14 @@ namespace Questor.Web
 
             var context = this.AutofacContainer.Resolve<QuestorContext>();
 
-            Policy.Handle<Exception>()
-                .WaitAndRetry(6, retryAttemp => TimeSpan.FromSeconds(Math.Pow(2, retryAttemp)))
-                .Execute(context.Database.Migrate);
+            if (context.Database.IsSqlServer())
+            {
+                Policy.Handle<Exception>()
+                    .WaitAndRetry(6, retryAttemp => TimeSpan.FromSeconds(Math.Pow(2, retryAttemp)))
+                    .Execute(context.Database.Migrate);
+            }
 
-        if (env.IsDevelopment())
+            if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
