@@ -17,6 +17,11 @@ namespace Questor.Infrasctructure.Data.Configuration
 
             builder.Property(e => e.Date)
                 .IsRequired();
+            
+            builder.Ignore(e => e.EngineTypeEnum);
+            
+            builder.Property(e => e.EngineTypeId)
+                .IsRequired();
 
             var navItem = builder.Metadata.FindNavigation(nameof(SearchResult.SearchResultItems));
             navItem.SetPropertyAccessMode(PropertyAccessMode.Field);

@@ -19,6 +19,7 @@ namespace Questor.Web.Models
             this.SelectedEngines =
                 Enum.GetValues(typeof(SearchEngineTypeEnum))
                     .Cast<SearchEngineTypeEnum>()
+                    .Where(type => type != SearchEngineTypeEnum.Offline)
                     .Select(engineType => new SelectedEngineVm
                     {
                         Id = (int)engineType,

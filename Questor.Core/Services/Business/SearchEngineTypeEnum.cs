@@ -4,6 +4,8 @@ namespace Questor.Core.Services.Business
 {
     public enum SearchEngineTypeEnum
     {
+        Offline = 0,
+        
         DuckDuckGo = 1,
         
         Yandex = 2,

@@ -12,6 +12,8 @@ namespace Questor.Web.Dto
 
         public IEnumerable<SelectedEngineVm> SelectedEngines {get;set;}
         
+        public string SearchPlace {get;set;}
+        
         public IEnumerable<SearchEngineTypeEnum> SearchEngineTypes => 
             this.SelectedEngines.Where(searchEngineVm => searchEngineVm.Checked)
                 .Select(engineTypeEnum => (SearchEngineTypeEnum)engineTypeEnum.Id);

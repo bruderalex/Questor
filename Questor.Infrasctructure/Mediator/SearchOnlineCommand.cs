@@ -5,9 +5,9 @@ using Questor.Core.Services.Business;
 
 namespace Questor.Infrasctructure.Mediator
 {
-    public class SearchCommand : IRequest<SearchResult>
+    public class SearchOnlineCommand : IRequest<SearchResult>
     {
-        public SearchCommand(string question, IEnumerable<SearchEngineTypeEnum> engineTypes = null)
+        public SearchOnlineCommand(string question, IEnumerable<SearchEngineTypeEnum> engineTypes = null)
         {
             this.Question = question;
             this.EngineTypes = engineTypes;

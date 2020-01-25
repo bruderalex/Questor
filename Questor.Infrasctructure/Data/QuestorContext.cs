@@ -1,18 +1,24 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Questor.Core.Data.Entities;
 
 namespace Questor.Infrasctructure.Data
 {
     public class QuestorContext : DbContext
     {
+        private readonly IConfiguration _configuration;
+
         public QuestorContext()
         {
             
         }
         
-        public QuestorContext(DbContextOptions<QuestorContext> options)
+        public QuestorContext(DbContextOptions<QuestorContext> options,
+            IConfiguration configuration)
             : base(options)
         {
+            this._configuration = configuration;
         }
 
         public DbSet<SearchResult> SearchResults { get; set; }
@@ -21,7 +27,12 @@ namespace Questor.Infrasctructure.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseInMemoryDatabase("QuestorDB");
+            var configuration = new ConfigurationBuilder()
+                .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
+                .AddJsonFile("appsettings.json")
+                .Build();
+            
+            optionsBuilder.UseSqlServer(configuration.GetConnectionString("QuestorDb"));
             base.OnConfiguring(optionsBuilder);
         }
 

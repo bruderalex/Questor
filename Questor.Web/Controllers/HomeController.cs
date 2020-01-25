@@ -44,12 +44,31 @@ namespace Questor.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Search([FromForm] StartSearchDto startSearchDto)
         {
-            var searchCommand = new SearchCommand(startSearchDto.Question, startSearchDto.SearchEngineTypes);
+            SearchResult searchResult;
+            
+            if (startSearchDto.SearchPlace.Equals("online"))
+            {
+                var searchCommand = new SearchOnlineCommand(startSearchDto.Question, startSearchDto.SearchEngineTypes);
+                searchResult = await this._mediator.Send(searchCommand);
+            }
+            else
+            {
+                var searchCommand = new SearchOfflineCommand(startSearchDto.Question);
+                searchResult = await this._mediator.Send(searchCommand);
+            }
+            
+            return RedirectToAction("Search", new {searchResultId = searchResult.Id});
+        }
 
-            var searchResult = await this._mediator.Send(searchCommand);
+        [HttpGet]
+        public async Task<IActionResult> Search(int searchResultId)
+        {
+            var command = new SearchQuery(searchResultId);
+            
+            var searchResult = await this._mediator.Send(command);
             
             var vm = this._mapper.Map<SearchResultVm>(searchResult);
-
+            
             return PartialView("SearchResults", vm);
         }
 

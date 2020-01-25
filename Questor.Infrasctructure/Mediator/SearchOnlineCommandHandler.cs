@@ -8,16 +8,16 @@ using Questor.Core.Services.Business;
 
 namespace Questor.Infrasctructure.Mediator
 {
-    public class SearchCommandHandler : IRequestHandler<SearchCommand, SearchResult>
+    public class SearchOnlineCommandHandler : IRequestHandler<SearchOnlineCommand, SearchResult>
     {
         private readonly ISearchService _searchService;
         
-        public SearchCommandHandler(ISearchService searchService, IAsyncRepository<SearchResult> resultsRepository)
+        public SearchOnlineCommandHandler(ISearchService searchService, IAsyncRepository<SearchResult> resultsRepository)
         {
             this._searchService = searchService;
         }
         
-        public async Task<SearchResult> Handle(SearchCommand request, CancellationToken cancellationToken)
+        public async Task<SearchResult> Handle(SearchOnlineCommand request, CancellationToken cancellationToken)
         {
             if (request == null)
                 throw new ArgumentNullException(nameof(request));

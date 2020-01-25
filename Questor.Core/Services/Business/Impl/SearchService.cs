@@ -15,14 +15,17 @@ namespace Questor.Core.Services.Business.Impl
         private Dictionary<int, ISearchEngine> SearchEngines { get; }
 
         private readonly IAsyncRepository<SearchResult> _searchResultRepository;
+        private readonly IAsyncRepository<SearchResultItem> _searchResultItemsRepository;
         
         private readonly ISearchResponseParser _searchResponseParser;
 
         public SearchService(IEnumerable<ISearchEngine> searchEngines, 
             IAsyncRepository<SearchResult> searchResultRepository,
+            IAsyncRepository<SearchResultItem> searchResultItemsRepository,
             ISearchResponseParser searchResponseParser)
         {
             this._searchResultRepository = searchResultRepository;
+            this._searchResultItemsRepository = searchResultItemsRepository;
             this._searchResponseParser = searchResponseParser;
             
             this.SearchEngines =
@@ -62,6 +65,22 @@ namespace Questor.Core.Services.Business.Impl
                 .ParseRawResponse(rawResult);
             
             var searchResult = new SearchResult(question, parsedItems, DateTime.Now, rawResult.SearchEngineTypeEnum);
+            
+            await this._searchResultRepository.AddAsync(searchResult);
+            
+            return searchResult;
+        }
+
+        public async Task<SearchResult> SearchOffline(string question)
+        {
+            var items = 
+                await this._searchResultItemsRepository
+                    .GetListAsync(r => 
+                        r.Content.IndexOf(question, StringComparison.Ordinal) != -1
+                        || r.Title.IndexOf(question, StringComparison.Ordinal) != -1
+                        || r.Url.IndexOf(question, StringComparison.Ordinal) != -1); 
+            
+            var searchResult = new SearchResult(question, items, DateTime.Now, SearchEngineTypeEnum.Offline);
             
             await this._searchResultRepository.AddAsync(searchResult);
             
