@@ -56,6 +56,7 @@ namespace Questor.Web
             this.AutofacContainer = app.ApplicationServices.GetAutofacRoot();
 
             var context = this.AutofacContainer.Resolve<QuestorContext>();
+		Console.WriteLine(this.Configuration.GetConnectionString("QuestorDb"));
             context.Database.Migrate();
             
             if (env.IsDevelopment())
