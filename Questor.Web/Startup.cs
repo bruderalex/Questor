@@ -13,6 +13,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Polly;
 using Questor.Infrasctructure.Data;
 
 namespace Questor.Web
@@ -56,10 +57,12 @@ namespace Questor.Web
             this.AutofacContainer = app.ApplicationServices.GetAutofacRoot();
 
             var context = this.AutofacContainer.Resolve<QuestorContext>();
-		Console.WriteLine(this.Configuration.GetConnectionString("QuestorDb"));
-            context.Database.Migrate();
-            
-            if (env.IsDevelopment())
+
+            Policy.Handle<Exception>()
+                .WaitAndRetry(6, retryAttemp => TimeSpan.FromSeconds(Math.Pow(2, retryAttemp)))
+                .Execute(context.Database.Migrate);
+
+        if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
