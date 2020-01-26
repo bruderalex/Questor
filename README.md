@@ -30,6 +30,7 @@ To run this application just use `docker-compose` commands, which will run an ap
 docker-compose build
 docker-compose up
 ```
+After up complete application can be accessed via :8080 port
 
 # Restrictions
 
