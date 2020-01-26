@@ -20,13 +20,13 @@ using Questor.Web.Models;
 
 namespace Questor.Web.Controllers
 {
-    public class HomeController : Controller
+    public class SearchController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly ILogger<SearchController> _logger;
         private readonly IMediator _mediator;
         private readonly IMapper _mapper;
 
-        public HomeController(ILogger<HomeController> logger, IMediator mediator, IMapper mapper)
+        public SearchController(ILogger<SearchController> logger, IMediator mediator, IMapper mapper)
         {
             this._logger = logger;
             this._mediator = mediator;

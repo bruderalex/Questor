@@ -8,13 +8,13 @@ Questor consists of 3 main projects:
 * Questor.Core
 
 ### Questor.Core
-A main business logic project, which contains specifications for services, implementations of which are used to maintain primary and auxiliary logic of application. Main service is an `ISearchService` and an 'ISearchEngine'. `ISearchService` describes a main search logic and 'ISearchEngine' is implemented by concrete search engines, such as "GoogleSearchEngine".
+A main business logic project, which contains specifications for services, implementations of which are used to maintain primary and auxiliary logic of application. Main service is an `ISearchService` and an 'ISearchEngine'. `ISearchService` describes a main search logic and 'ISearchEngine' is implemented by concrete search engines, such as "GoogleSearchEngine". Main logic of receiving search results for each search engine is described in `ISearchEngine` interface implementations and based on site scraping. Despite search engine type, each of them has `Selector` property. `Selector` describes how to retrieve search results from response. Each engine also has a `Search` method. For all engines this method is quite similar, but has some difference (eg. Bing won't send valid results without cookies in search request).    
 
-### Questor.Infrustructure
-A project, which contains infrustructure components, such as repositories, commands, migrations for database and so on.
+### Questor.Infrastructure
+A project, which contains infrastructure components, such as repositories, commands, migrations for database and so on.
 
 ### Questor.Web
-An UI project, which also desribes startup of application and contains main entry point.
+An UI project, which also describes startup of application and contains main entry point.
 
 ### Libraries usage
 Questor uses some third-party libraries such as:
@@ -36,10 +36,10 @@ After up complete application can be accessed via :8080 port
 
 Due to reasons of being simple, Questor uses scraping for getting search results, instead of using official search engines API and do not implenet any proxying logic. So, attempt to do a lot of request may results with error.
 
-## Improvments 
-- [x] unit tests
+## Improvements 
+- [ ] more unit tests
 - [ ] additional tests (functional, integration)
 - [ ] https support
 - [ ] full-text search through saved results
 - [ ] additional search engines support
-- [ ] cached requests and UI improvments
+- [ ] cached requests and UI improvements
