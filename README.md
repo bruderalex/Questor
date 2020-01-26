@@ -38,6 +38,7 @@ Due to reasons of being simple, Questor uses scraping for getting search results
 
 ## Improvements 
 - [ ] more unit tests
+- [ ] more comments
 - [ ] additional tests (functional, integration)
 - [ ] https support
 - [ ] full-text search through saved results
