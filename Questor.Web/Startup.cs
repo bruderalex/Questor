@@ -15,6 +15,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Polly;
 using Questor.Infrasctructure.Data;
+using Questor.Web.MIddlewares;
 
 namespace Questor.Web
 {
@@ -76,6 +77,7 @@ namespace Questor.Web
                 app.UseHsts();
             }
 
+            app.UseMiddleware<ErrorHandlingMiddleware>();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 

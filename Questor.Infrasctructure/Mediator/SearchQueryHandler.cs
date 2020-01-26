@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using Questor.Core.Data;
@@ -17,6 +18,9 @@ namespace Questor.Infrasctructure.Mediator
         
         public async Task<SearchResult> Handle(SearchQuery request, CancellationToken cancellationToken)
         {
+            if (request == null)
+                throw new ArgumentNullException(nameof(request));
+            
             var result = await this._searchResultRepository.FindAsync(request.Id);
             
             return result;

@@ -4,7 +4,7 @@
 
 $('#search-input').keyup(searchButtonDisabler);
 
-$('#search-form :checkbox').each(function() {
+$('#search-form :checkbox').each(function () {
     $(this).change(searchButtonDisabler);
 });
 
@@ -21,10 +21,15 @@ $('#search-button').click(function () {
         data: $('#search-form').serialize(),
         processData: true,
         success: function (data) {
-            $('#results').html(data);
-        }
-    }).done(function () {
+
+        },
+
+    }).done(function (data) {
+        $('#results').html(data);
         $('#loading-div-background').hide();
+    }).fail(function () {
+        $('#loading-div-background').hide();
+        alert("internal server error");
     });
 });
 

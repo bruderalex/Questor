@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
@@ -43,10 +44,19 @@ namespace Questor.Core.Services.Engines.Impl
                 var baseUri = new Uri($"{BaseUrl}search?q={question}");
 
                 using var httpClient = new HttpClient();
-                httpClient.DefaultRequestHeaders.Add("User-Agent", @"Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:72.0) Gecko/20100101 Firefox/72.0");
-                httpClient.DefaultRequestHeaders.Add("Accept", @"text/html,application/xhtml+xml,application/xml");
-                httpClient.DefaultRequestHeaders.Add("Upgrade-Insecure-Requests", @"1");
-                httpClient.DefaultRequestHeaders.Add("TE", @"Trailers");
+                
+                // bing will not respond without cookies
+                var coockieResponse = await httpClient.GetAsync(BaseUrl, cancellationToken);
+                var headers = coockieResponse.Headers;
+                var cookies = 
+                    headers.GetValues("Set-Cookie")
+                        .Aggregate(string.Empty, 
+                            (curr, next) => 
+                                string.IsNullOrEmpty(curr) 
+                                    ? $"{next};" 
+                                    : $"{curr} {next};");
+                
+                httpClient.DefaultRequestHeaders.Add("Cookie", cookies);
                 var response = await httpClient.GetAsync(baseUri, cancellationToken);
 
                 if (!response.IsSuccessStatusCode)

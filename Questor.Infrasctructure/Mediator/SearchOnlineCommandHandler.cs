@@ -22,7 +22,7 @@ namespace Questor.Infrasctructure.Mediator
             if (request == null)
                 throw new ArgumentNullException(nameof(request));
             
-            var result = await this._searchService.SearchOnline(request.Question, request.EngineTypes);
+            var result = await this._searchService.SearchOnlineAsync(request.Question, request.EngineTypes);
             
             return result;
         }

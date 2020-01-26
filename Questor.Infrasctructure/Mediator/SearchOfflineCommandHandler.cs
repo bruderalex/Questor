@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using Questor.Core.Data.Entities;
@@ -17,7 +18,10 @@ namespace Questor.Infrasctructure.Mediator
         
         public async Task<SearchResult> Handle(SearchOfflineCommand request, CancellationToken cancellationToken)
         {
-            return await this._searchService.SearchOffline(request.Question);
+            if (request == null)
+                throw new ArgumentNullException(nameof(request));
+            
+            return await this._searchService.SearchOfflineAsync(request.Question);
         }
     }
 }
