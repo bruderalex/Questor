@@ -61,6 +61,10 @@ namespace Questor.Core.Services.Engines.Impl
 
                 return new RawResult(rawContent, this.SearchEngineTypeEnum);
             }
+            catch (TaskCanceledException ex)
+            {
+                return null;
+            }
             catch (Exception ex)
             {
                 this._logger.LogError(ex, $"response to {nameof(YandexSearchEngine)} failed");

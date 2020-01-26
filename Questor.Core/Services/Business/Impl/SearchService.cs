@@ -59,22 +59,43 @@ namespace Questor.Core.Services.Business.Impl
 
                 foreach (var pair in searchEngines)
                 {
-                    engineSearchTasks.Add(pair.Value.Search(question, token));
+                    var searchTask = pair.Value.Search(question, token);
+                    engineSearchTasks.Add(searchTask);
                 }
 
-                var completedSearchTask = await Task.WhenAny(engineSearchTasks);
-                var rawResult = await completedSearchTask;
-                tokenSource.Cancel();
+                IEnumerable<SearchResultItem> parsedItems = new List<SearchResultItem>();
+                RawResult rawResult = null;
+                
+                foreach (var task in engineSearchTasks.ToList())
+                {
+                    var completedSearchTask = await Task.WhenAny(engineSearchTasks);
 
-                var parsedItems =
-                    await this._searchResponseParser
-                        .ParseRawResponse(rawResult);
+                    rawResult = await completedSearchTask;
 
+                    parsedItems =
+                        await this._searchResponseParser
+                            .ParseRawResponse(rawResult);
+
+                    if (parsedItems.Any())
+                    {
+                        tokenSource.Cancel();
+                        break;
+                    }
+                    
+                    engineSearchTasks.Remove(completedSearchTask);
+                    if (!engineSearchTasks.Any())
+                        break;
+                }
+
+                if (rawResult == null) 
+                    return null;
+                
                 var searchResult = new SearchResult(question, parsedItems, DateTime.Now, rawResult.SearchEngineTypeEnum);
 
                 await this._searchResultRepository.AddAsync(searchResult);
 
                 return searchResult;
+
             }
             catch (Exception ex)
             {

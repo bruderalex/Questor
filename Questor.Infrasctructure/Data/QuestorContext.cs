@@ -27,14 +27,12 @@ namespace Questor.Infrasctructure.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseInMemoryDatabase("QuestorDb");
+            var configuration = new ConfigurationBuilder()
+                .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
+                .AddJsonFile("appsettings.json")
+                .Build();
             
-            // var configuration = new ConfigurationBuilder()
-            //     .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
-            //     .AddJsonFile("appsettings.json")
-            //     .Build();
-            
-            // optionsBuilder.UseSqlServer(configuration.GetConnectionString("QuestorDb"));
+            optionsBuilder.UseSqlServer(configuration.GetConnectionString("QuestorDb"));
             base.OnConfiguring(optionsBuilder);
         }
 

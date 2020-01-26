@@ -44,7 +44,7 @@ namespace Questor.Core.Services.Engines.Impl
 
                 using var httpClient = new HttpClient();
                 httpClient.DefaultRequestHeaders.Add("User-Agent", @"Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:72.0) Gecko/20100101 Firefox/72.0");
-                var response = await this._logger.LogTimeAsync(async () => await httpClient.GetAsync(baseUri, cancellationToken));
+                var response = await httpClient.GetAsync(baseUri, cancellationToken);
 
                 if (!response.IsSuccessStatusCode)
                     throw new SearchEngineException(this);
@@ -52,6 +52,10 @@ namespace Questor.Core.Services.Engines.Impl
                 var rawContent = await response.Content.ReadAsStringAsync();
 
                 return new RawResult(rawContent, this.SearchEngineTypeEnum);
+            }
+            catch (TaskCanceledException ex)
+            {
+                return null;
             }
             catch (Exception ex)
             {
