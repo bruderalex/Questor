@@ -53,20 +53,18 @@ namespace Questor.Web
 
             if (HostEnvironment.IsDevelopment())
             {
-                sqlConnectionStringBuilder.Password = Configuration["Questor:DbPassword"];
+                services.AddDbContext<QuestorContext>(
+                    optionsBuilder =>
+                        optionsBuilder.UseInMemoryDatabase("QuestorDb"));
             }
             else
             {
                 sqlConnectionStringBuilder.Password = Environment.GetEnvironmentVariable("DB_PASS");
+                
+                services.AddDbContext<QuestorContext>(
+                    optionsBuilder =>
+                        optionsBuilder.UseSqlServer(sqlConnectionStringBuilder.ConnectionString));
             }
-
-            var connectionString = sqlConnectionStringBuilder.ConnectionString;
-
-            services.AddDbContext<QuestorContext>(
-                optionsBuilder =>
-                    optionsBuilder.UseInMemoryDatabase("QuestorDb")
-                    //optionsBuilder.UseSqlServer(connectionString)
-            );
 
             services.AddMediatR(typeof(QuestorContext).Assembly);
             services.AddAutoMapper(typeof(Startup).Assembly);
