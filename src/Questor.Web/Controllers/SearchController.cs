@@ -61,12 +61,12 @@ namespace Questor.Web.Controllers
                 searchResult = await this._mediator.Send(searchCommand);
             }
             
-            return RedirectToAction("GetSearchResultById", new {searchResultId = searchResult.Id});
+            return RedirectToAction("GetSearchResultById", new {searchResultId = searchResult.UniqueId});
         }
 
         [Route("search/getresultsbyid/{searchResultId}")]
         [HttpGet]
-        public async Task<IActionResult> GetSearchResultById(int searchResultId)
+        public async Task<IActionResult> GetSearchResultById(Guid searchResultId)
         {
             var command = new SearchQuery(searchResultId);
             
@@ -77,7 +77,6 @@ namespace Questor.Web.Controllers
             return PartialView("SearchResults", vm);
         }
 
-        [Route("search/error")]
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

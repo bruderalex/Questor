@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Questor.Core.Data.Entities;
 
@@ -34,5 +35,16 @@ namespace Questor.Core.Services.Business
         ///    Search result
         /// </returns>
         Task<SearchResult> SearchOfflineAsync(string question);
+        
+        /// <summary>
+        ///     Get search results from search service internal cache
+        /// </summary>
+        /// <param name="id">
+        ///    Unique result id
+        /// </param>
+        /// <returns>
+        ///    Search result
+        /// </returns>
+        SearchResult GetSearchResultByUniqueId(Guid id);
     }
 }

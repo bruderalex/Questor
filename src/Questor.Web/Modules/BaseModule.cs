@@ -38,6 +38,10 @@ namespace Questor.Web.Modules
             builder.RegisterType<SearchResultRepository>()
                 .As<IAsyncRepository<SearchResult, int>>()
                 .InstancePerDependency();
+            
+            builder.RegisterType<SearchResultsCache>()
+                .As<ISearchResultsCache>()
+                .SingleInstance();
         }
     }
 }

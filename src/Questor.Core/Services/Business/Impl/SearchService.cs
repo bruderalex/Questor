@@ -18,22 +18,30 @@ namespace Questor.Core.Services.Business.Impl
         private readonly IAsyncRepository<SearchResult, int> _searchResultRepository;
         private readonly IAsyncRepository<SearchResultItem, int> _searchResultItemsRepository;
         private readonly ISearchResponseParser _searchResponseParser;
+        private readonly ISearchResultsCache _searchResultsCache;
         private readonly IQuestorLogger<SearchService> _logger;
 
         public SearchService(IEnumerable<ISearchEngine> searchEngines,
             IAsyncRepository<SearchResult, int> searchResultRepository,
             IAsyncRepository<SearchResultItem, int> searchResultItemsRepository,
             ISearchResponseParser searchResponseParser,
+            ISearchResultsCache searchResultsCache,
             IQuestorLogger<SearchService> logger)
         {
             this._searchResultRepository = searchResultRepository;
             this._searchResultItemsRepository = searchResultItemsRepository;
             this._searchResponseParser = searchResponseParser;
+            this._searchResultsCache = searchResultsCache;
             this._logger = logger;
 
             this.SearchEngines =
                 searchEngines.GroupBy(engine => (int)engine.SearchEngineTypeEnum)
                     .ToDictionary(g => g.Key, g => g.FirstOrDefault());
+        }
+
+        public SearchResult GetSearchResultByUniqueId(Guid id)
+        {
+            return this._searchResultsCache.GetByGuid(id);
         }
 
         public async Task<SearchResult> SearchOnlineAsync(string question, IEnumerable<SearchEngineTypeEnum> searchEngineTypes = null)
@@ -89,6 +97,8 @@ namespace Questor.Core.Services.Business.Impl
 
                 await this._searchResultRepository.AddAsync(searchResult);
 
+                this._searchResultsCache.Add(searchResult);
+
                 return searchResult;
             }
             catch (Exception ex)
@@ -115,6 +125,8 @@ namespace Questor.Core.Services.Business.Impl
                             || r.Url.IndexOf(question, StringComparison.Ordinal) != -1);
 
                 var searchResult = new SearchResult(question, items, DateTime.Now, SearchEngineTypeEnum.Offline);
+
+                this._searchResultsCache.Add(searchResult);
 
                 return searchResult;
             }

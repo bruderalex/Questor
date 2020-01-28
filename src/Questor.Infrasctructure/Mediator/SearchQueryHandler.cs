@@ -4,16 +4,17 @@ using System.Threading.Tasks;
 using MediatR;
 using Questor.Core.Data;
 using Questor.Core.Data.Entities;
+using Questor.Core.Services.Business;
 
 namespace Questor.Infrasctructure.Mediator
 {
     public class SearchQueryHandler : IRequestHandler<SearchQuery, SearchResult>
     {
-        private readonly IAsyncRepository<SearchResult, int> _searchResultRepository;
+        private ISearchService _searchService;
         
-        public SearchQueryHandler(IAsyncRepository<SearchResult, int> searchResultRepository)
+        public SearchQueryHandler(ISearchService searchService)
         {
-            this._searchResultRepository = searchResultRepository;
+            this._searchService = searchService;
         }
         
         public async Task<SearchResult> Handle(SearchQuery request, CancellationToken cancellationToken)
@@ -21,7 +22,7 @@ namespace Questor.Infrasctructure.Mediator
             if (request == null)
                 throw new ArgumentNullException(nameof(request));
             
-            var result = await this._searchResultRepository.FindAsync(request.Id);
+            var result = this._searchService.GetSearchResultByUniqueId(request.Id);
             
             return result;
         }

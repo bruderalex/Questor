@@ -18,6 +18,7 @@ namespace Questor.Core.Data.Entities
             this.Date = searchDate;
             this._searchResultItems.AddRange(searchResultItems);
             this.EngineTypeId = (int)engineTypeEnum;
+            this.UniqueId = Guid.NewGuid();
         }
 
         public string Question { get; }
@@ -27,6 +28,8 @@ namespace Questor.Core.Data.Entities
         public SearchEngineTypeEnum EngineTypeEnum => (SearchEngineTypeEnum)EngineTypeId;
 
         public DateTime Date { get; }
+        
+        public Guid UniqueId {get;}
 
         private readonly List<SearchResultItem> _searchResultItems = new List<SearchResultItem>();
 

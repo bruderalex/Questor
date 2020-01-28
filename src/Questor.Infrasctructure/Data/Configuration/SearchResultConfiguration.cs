@@ -20,6 +20,8 @@ namespace Questor.Infrasctructure.Data.Configuration
             
             builder.Ignore(e => e.EngineTypeEnum);
             
+            builder.Ignore(e => e.UniqueId);
+            
             builder.Property(e => e.EngineTypeId)
                 .IsRequired();
 

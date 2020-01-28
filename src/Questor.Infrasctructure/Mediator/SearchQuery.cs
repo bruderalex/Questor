@@ -1,15 +1,16 @@
-﻿using MediatR;
+﻿using System;
+using MediatR;
 using Questor.Core.Data.Entities;
 
 namespace Questor.Infrasctructure.Mediator
 {
     public class SearchQuery : IRequest<SearchResult>
     {
-        public SearchQuery(int id)
+        public SearchQuery(Guid id)
         {
             this.Id = id;
         }
 
-        public int Id { get; set; }
+        public Guid Id { get; set; }
     }
 }

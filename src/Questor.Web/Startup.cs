@@ -64,8 +64,8 @@ namespace Questor.Web
 
             services.AddDbContext<QuestorContext>(
                 optionsBuilder =>
-                    //optionsBuilder.UseInMemoryDatabase("QuestorDb")
-                    optionsBuilder.UseSqlServer(connectionString)
+                    optionsBuilder.UseInMemoryDatabase("QuestorDb")
+                    //optionsBuilder.UseSqlServer(connectionString)
             );
 
             services.AddMediatR(typeof(QuestorContext).Assembly);
