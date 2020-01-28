@@ -4,8 +4,17 @@ namespace Questor.Core.Exceptions
 {
     public class UnknownSearchEngineException : Exception
     {
-        public UnknownSearchEngineException(string message, Exception innerException = null)
-            : base(message, innerException)
+        public UnknownSearchEngineException()
+        {
+        }
+
+        public UnknownSearchEngineException(string message)
+            : base(message)
+        {
+        }
+
+        public UnknownSearchEngineException(string message, Exception ex)
+            : base(message, ex)
         {
         }
     }

@@ -60,7 +60,7 @@ namespace Questor.Core.Services.Engines.Impl
                 var response = await httpClient.PostAsync(baseUri, requestParams, cancellationToken);
 
                 if (!response.IsSuccessStatusCode)
-                    throw new SearchEngineException(this);
+                    throw new SearchEngineException($"{nameof(DuckduckGoSearchEngine)} didn't return Ok 200");
 
                 var rawContent = await response.Content.ReadAsStringAsync();
 

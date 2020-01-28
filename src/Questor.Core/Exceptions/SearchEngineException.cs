@@ -5,8 +5,17 @@ namespace Questor.Core.Exceptions
 {
     public class SearchEngineException : Exception
     {
-        public SearchEngineException(ISearchEngine engine, Exception innerException = null)
-            : base($"{engine.GetType().Name} failed", innerException)
+        public SearchEngineException()
+        {
+        }
+
+        public SearchEngineException(string message)
+            : base(message)
+        {
+        }
+
+        public SearchEngineException(string message, Exception ex)
+            : base(message, ex)
         {
         }
     }
