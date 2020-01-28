@@ -13,6 +13,6 @@ namespace Questor.Core.Services.Engines
         
         public SearchEngineTypeEnum SearchEngineTypeEnum {get;}
         
-        public string Content {get; }
+        public string Content {get;}
     }
 }

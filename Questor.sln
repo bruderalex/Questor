@@ -10,6 +10,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Questor.Infrasctructure", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Questor.Web", "src\Questor.Web\Questor.Web.csproj", "{B30DAFD5-524A-41C0-A776-9399D7B42A7C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Questor.Core.Tests", "tests\Questor.Core.Tests\Questor.Core.Tests.csproj", "{941F2300-6977-470B-A0F9-A2C3E8126411}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -28,10 +30,15 @@ Global
 		{B30DAFD5-524A-41C0-A776-9399D7B42A7C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B30DAFD5-524A-41C0-A776-9399D7B42A7C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B30DAFD5-524A-41C0-A776-9399D7B42A7C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{941F2300-6977-470B-A0F9-A2C3E8126411}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{941F2300-6977-470B-A0F9-A2C3E8126411}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{941F2300-6977-470B-A0F9-A2C3E8126411}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{941F2300-6977-470B-A0F9-A2C3E8126411}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{2209A0E1-3EA4-4869-80F0-20AA62E58BDA} = {46E43136-6290-402E-828D-AF3FE19AECFB}
 		{1998085A-649E-447A-94F4-2F5CE2078DE3} = {46E43136-6290-402E-828D-AF3FE19AECFB}
 		{B30DAFD5-524A-41C0-A776-9399D7B42A7C} = {46E43136-6290-402E-828D-AF3FE19AECFB}
+		{941F2300-6977-470B-A0F9-A2C3E8126411} = {8CBA2544-6B66-4C17-9241-7D8C89CE217B}
 	EndGlobalSection
 EndGlobal

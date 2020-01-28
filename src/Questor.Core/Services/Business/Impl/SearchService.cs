@@ -61,7 +61,7 @@ namespace Questor.Core.Services.Business.Impl
 
                 var engineSearchTasks = new List<Task<RawResult>>();
 
-                var tokenSource = new CancellationTokenSource();
+                using var tokenSource = new CancellationTokenSource();
                 var token = tokenSource.Token;
 
                 foreach (var pair in searchEngines)
