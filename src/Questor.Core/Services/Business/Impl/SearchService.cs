@@ -63,39 +63,34 @@ namespace Questor.Core.Services.Business.Impl
                     engineSearchTasks.Add(searchTask);
                 }
 
-                IEnumerable<SearchResultItem> parsedItems = new List<SearchResultItem>();
+                var foundedItems = new List<SearchResultItem>();
                 RawResult rawResult = null;
-                
-                foreach (var task in engineSearchTasks.ToList())
+
+                while (engineSearchTasks.Count > 0)
                 {
-                    var completedSearchTask = await Task.WhenAny(engineSearchTasks);
+                    var completedTask = await Task.WhenAny(engineSearchTasks);
+                    engineSearchTasks.Remove(completedTask);
 
-                    rawResult = await completedSearchTask;
+                    rawResult = await completedTask;
+                    var parsedItems = await this._searchResponseParser.ParseRawResponse(rawResult);
+                    var parsedList = parsedItems.ToList();
 
-                    parsedItems =
-                        await this._searchResponseParser
-                            .ParseRawResponse(rawResult);
-
-                    if (parsedItems.Any())
+                    if (parsedList.Any())
                     {
                         tokenSource.Cancel();
+                        foundedItems.AddRange(parsedList);
                         break;
                     }
-                    
-                    engineSearchTasks.Remove(completedSearchTask);
-                    if (!engineSearchTasks.Any())
-                        break;
                 }
 
-                if (rawResult == null) 
+                if (rawResult == null)
                     return null;
-                
-                var searchResult = new SearchResult(question, parsedItems, DateTime.Now, rawResult.SearchEngineTypeEnum);
+
+                var searchResult = new SearchResult(question, foundedItems, DateTime.Now, rawResult.SearchEngineTypeEnum);
 
                 await this._searchResultRepository.AddAsync(searchResult);
 
                 return searchResult;
-
             }
             catch (Exception ex)
             {
