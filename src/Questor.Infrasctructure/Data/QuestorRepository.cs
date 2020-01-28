@@ -47,7 +47,7 @@ namespace Questor.Infrasctructure.Data
             await this._context.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<T>> GetListAsync(Func<T, bool> predicate)
+        public IEnumerable<T> GetList(Func<T, bool> predicate)
         {
             return this._context.Set<T>().Where(predicate).ToList();
         }

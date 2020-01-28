@@ -1,22 +1,21 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-
-    <PropertyGroup>
-        <TargetFramework>netcoreapp3.0</TargetFramework>
-    </PropertyGroup>
-
-    <ItemGroup>
-      <PackageReference Include="MediatR" Version="8.0.0" />
-      <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.1" />
-      <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.1" />
-      <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="3.1.1" />
-      <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.1" />
-      <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.1" />
-      <PackageReference Include="Microsoft.Extensions.Configuration" Version="3.1.1" />
-      <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="3.1.1" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <ProjectReference Include="..\Questor.Core\Questor.Core.csproj" />
-    </ItemGroup>
-
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <UserSecretsId>1213aca9-07b6-469a-9bf5-739079fb21af</UserSecretsId>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="AngleSharp" Version="0.14.0-alpha-788" />
+    <PackageReference Include="MediatR" Version="8.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="3.1.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.1" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="3.1.1" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="3.1.1" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Questor.Core\Questor.Core.csproj" />
+  </ItemGroup>
 </Project>

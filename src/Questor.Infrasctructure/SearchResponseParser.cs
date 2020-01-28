@@ -7,8 +7,9 @@ using Questor.Core.Auxiliary;
 using Questor.Core.Data.Entities;
 using Questor.Core.Exceptions;
 using Questor.Core.Services.Business;
+using Questor.Core.Services.Engines;
 
-namespace Questor.Core.Services.Engines.Impl
+namespace Questor.Infrasctructure
 {
     public class SearchResponseParser : ISearchResponseParser
     {

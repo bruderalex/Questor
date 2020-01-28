@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Questor.Core.Data.Entities;
@@ -11,9 +12,8 @@ namespace Questor.Infrasctructure.Data
 
         public QuestorContext()
         {
-            
         }
-        
+
         public QuestorContext(DbContextOptions<QuestorContext> options,
             IConfiguration configuration)
             : base(options)
@@ -27,14 +27,7 @@ namespace Questor.Infrasctructure.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseInMemoryDatabase("QuestorDb");
             
-            // var configuration = new ConfigurationBuilder()
-            //     .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
-            //     .AddJsonFile("appsettings.json")
-            //     .Build();
-            //
-            // optionsBuilder.UseSqlServer(configuration.GetConnectionString("QuestorDb"));
             base.OnConfiguring(optionsBuilder);
         }
 

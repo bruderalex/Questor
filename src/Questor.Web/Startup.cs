@@ -9,6 +9,7 @@ using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -21,20 +22,24 @@ namespace Questor.Web
 {
     public class Startup
     {
-        public Startup(IHostEnvironment environment)
+        public Startup(IHostEnvironment hostEnvironment)
         {
             var configurationBuilder = new ConfigurationBuilder()
-                .SetBasePath(environment.ContentRootPath)
+                .SetBasePath(hostEnvironment.ContentRootPath)
                 .AddJsonFile("appsettings.json", true, true)
-                .AddJsonFile($"appsettings.{environment.EnvironmentName}.json", true)
+                .AddJsonFile($"appsettings.{hostEnvironment.EnvironmentName}.json", true)
+                .AddUserSecrets<Startup>()
                 .AddEnvironmentVariables();
 
             this.Configuration = configurationBuilder.Build();
+            this.HostEnvironment = hostEnvironment;
         }
 
-        public IConfiguration Configuration { get; }
+        private IConfiguration Configuration { get; }
 
-        public ILifetimeScope AutofacContainer { get; private set; }
+        private IHostEnvironment HostEnvironment { get; }
+
+        private ILifetimeScope AutofacContainer { get; set; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -42,11 +47,31 @@ namespace Questor.Web
             services.AddOptions()
                 .AddSingleton(Configuration);
             services.AddControllersWithViews();
-            services.AddDbContext<QuestorContext>(); 
+
+            var sqlConnectionStringBuilder =
+                new SqlConnectionStringBuilder(Configuration.GetConnectionString("QuestorDb"));
+
+            if (HostEnvironment.IsDevelopment())
+            {
+                sqlConnectionStringBuilder.Password = Configuration["Questor:DbPassword"];
+            }
+            else
+            {
+                sqlConnectionStringBuilder.Password = Environment.GetEnvironmentVariable("DbPass");
+            }
+
+            var connectionString = sqlConnectionStringBuilder.ConnectionString;
+
+            services.AddDbContext<QuestorContext>(
+                optionsBuilder =>
+                    optionsBuilder.UseSqlServer(connectionString));
+
+            //optionsBuilder.UseInMemoryDatabase("QuestorDb");
+
             services.AddMediatR(typeof(QuestorContext).Assembly);
             services.AddAutoMapper(typeof(Startup).Assembly);
         }
-    
+
         public void ConfigureContainer(ContainerBuilder builder)
         {
             builder.RegisterAssemblyModules(typeof(Startup).Assembly);

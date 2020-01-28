@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using AngleSharp;
 using Questor.Core.Auxiliary;
 using Questor.Core.Data;
 using Questor.Core.Data.Entities;
@@ -109,8 +108,8 @@ namespace Questor.Core.Services.Business.Impl
                 // just simple search by string;
                 // for SQL-server it can be implemented as full-text search
                 var items =
-                    await this._searchResultItemsRepository
-                        .GetListAsync(r =>
+                    this._searchResultItemsRepository
+                        .GetList(r =>
                             r.Content.IndexOf(question, StringComparison.Ordinal) != -1
                             || r.Title.IndexOf(question, StringComparison.Ordinal) != -1
                             || r.Url.IndexOf(question, StringComparison.Ordinal) != -1);

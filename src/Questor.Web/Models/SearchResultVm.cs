@@ -39,14 +39,4 @@ namespace Questor.Web.Models
 
         public IList<SelectedEngineVm> SelectedEngines { get; set; } = new List<SelectedEngineVm>();
     }
-
-    [Serializable]
-    public class SelectedEngineVm
-    {
-        public int Id { get; set; }
-
-        public string Name { get; set; }
-
-        public bool Checked { get; set; }
-    }
 }

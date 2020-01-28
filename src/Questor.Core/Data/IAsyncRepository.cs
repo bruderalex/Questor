@@ -17,6 +17,6 @@ namespace Questor.Core.Data
         
         Task DeleteAsync(T entity);
         
-        Task<IEnumerable<T>> GetListAsync(Func<T, bool> predicate);
+        IEnumerable<T> GetList(Func<T, bool> predicate);
     }
 }

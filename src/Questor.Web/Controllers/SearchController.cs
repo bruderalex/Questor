@@ -33,7 +33,7 @@ namespace Questor.Web.Controllers
             this._mapper = mapper;
         }
 
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
             var vm = new SearchResultVm();
             vm.InitializeSelectedEngines();
