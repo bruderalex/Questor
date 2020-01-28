@@ -53,8 +53,10 @@ namespace Questor.Infrasctructure
                         || string.IsNullOrWhiteSpace(title)
                         || string.IsNullOrWhiteSpace(content))
                     {
-                        items.Add(new SearchResultItem(title, content, url));
+                        continue;
                     }
+
+                    items.Add(new SearchResultItem(title, content, url));
                 }
 
                 return items;
