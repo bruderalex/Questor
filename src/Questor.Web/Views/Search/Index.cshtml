@@ -12,7 +12,7 @@
     </div>
     <h1 class="display-4 display-2">Questor Project</h1>
 
-    @using (Html.BeginForm("Search", "Search", FormMethod.Post, new {id = "search-form"}))
+    @using (Html.BeginForm("StartSearch", "Search", FormMethod.Post, new {id = "search-form"}))
     {
         <div class="d-inline-block float-left">
             <input type="radio" name="searchPlace" value="online" checked onchange="checkSearchType(this)">
@@ -37,7 +37,7 @@
 
         <div class="row" style="min-width: 77em">
             <div class="input-group">
-                <input class="form-control input-lg border-right-0 border" placeholder="Search..." id="search-input" name="question" value="@Model?.Question">
+                <input class="form-control input-lg border-right-0 border" placeholder="StartSearch..." id="search-input" name="question" value="@Model?.Question">
                 <span class="input-group-append">
                     <button class="btn-primary btn btn-outline-secondary border-left-0 border" type="submit" id="search-button" disabled>
                         <i class="fa fa-search"></i>

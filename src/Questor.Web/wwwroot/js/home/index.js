@@ -17,7 +17,7 @@ $('#search-button').click(function () {
     $('#loading-div-background').show();
     $.ajax({
         type: 'POST',
-        url: '/search/search',
+        url: '/search/start',
         data: $('#search-form').serialize(),
         processData: true,
         success: function (data) {
