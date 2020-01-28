@@ -49,7 +49,12 @@ namespace Questor.Infrasctructure
                     var title = link.QuerySelector(searchEngine.Selector.Title)?.TextContent;
                     var content = link.QuerySelector(searchEngine.Selector.Text)?.TextContent;
 
-                    items.Add(new SearchResultItem(title, content, url));
+                    if (string.IsNullOrWhiteSpace(url)
+                        || string.IsNullOrWhiteSpace(title)
+                        || string.IsNullOrWhiteSpace(content))
+                    {
+                        items.Add(new SearchResultItem(title, content, url));
+                    }
                 }
 
                 return items;

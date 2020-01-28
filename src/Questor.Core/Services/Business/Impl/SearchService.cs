@@ -116,8 +116,6 @@ namespace Questor.Core.Services.Business.Impl
 
                 var searchResult = new SearchResult(question, items, DateTime.Now, SearchEngineTypeEnum.Offline);
 
-                await this._searchResultRepository.AddAsync(searchResult);
-
                 return searchResult;
             }
             catch (Exception ex)
