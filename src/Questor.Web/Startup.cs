@@ -64,9 +64,9 @@ namespace Questor.Web
 
             services.AddDbContext<QuestorContext>(
                 optionsBuilder =>
-                    optionsBuilder.UseSqlServer(connectionString));
-
-            //optionsBuilder.UseInMemoryDatabase("QuestorDb");
+                    //optionsBuilder.UseInMemoryDatabase("QuestorDb")
+                    optionsBuilder.UseSqlServer(connectionString)
+            );
 
             services.AddMediatR(typeof(QuestorContext).Assembly);
             services.AddAutoMapper(typeof(Startup).Assembly);
@@ -97,9 +97,8 @@ namespace Questor.Web
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-                app.UseHsts();
+                app.UseExceptionHandler("/Search/Error");
+                //app.UseHsts(); // no https configured for current application
             }
 
             app.UseMiddleware<ErrorHandlingMiddleware>();

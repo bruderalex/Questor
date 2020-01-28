@@ -8,7 +8,7 @@ using Questor.Core.Data.Entities.Base;
 
 namespace Questor.Infrasctructure.Data
 {
-    public class QuestorRepository<T> : IAsyncRepository<T> where T : BaseEntity
+    public class QuestorRepository<T, TId> : IAsyncRepository<T, TId> where T : BaseEntity<TId>
     {
         protected readonly QuestorContext _context;
         
@@ -17,7 +17,7 @@ namespace Questor.Infrasctructure.Data
             this._context = context;
         }
         
-        public virtual async Task<T> FindAsync(int id)
+        public virtual async Task<T> FindAsync(TId id)
         {
             return await this._context.Set<T>().FindAsync(id);
         }

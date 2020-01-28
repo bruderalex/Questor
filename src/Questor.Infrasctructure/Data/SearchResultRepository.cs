@@ -5,7 +5,7 @@ using Questor.Core.Data.Entities;
 
 namespace Questor.Infrasctructure.Data
 {
-    public class SearchResultRepository : QuestorRepository<SearchResult>
+    public class SearchResultRepository : QuestorRepository<SearchResult, int>
     {
         public SearchResultRepository(QuestorContext context) : 
             base(context)

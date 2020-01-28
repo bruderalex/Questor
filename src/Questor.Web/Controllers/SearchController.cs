@@ -33,6 +33,9 @@ namespace Questor.Web.Controllers
             this._mapper = mapper;
         }
 
+        [Route("")]
+        [Route("search")]
+        [Route("search/index")]
         public IActionResult Index()
         {
             var vm = new SearchResultVm();
@@ -74,6 +77,7 @@ namespace Questor.Web.Controllers
             return PartialView("SearchResults", vm);
         }
 
+        [Route("search/error")]
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

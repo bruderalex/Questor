@@ -15,14 +15,14 @@ namespace Questor.Core.Services.Business.Impl
     {
         private Dictionary<int, ISearchEngine> SearchEngines { get; }
 
-        private readonly IAsyncRepository<SearchResult> _searchResultRepository;
-        private readonly IAsyncRepository<SearchResultItem> _searchResultItemsRepository;
+        private readonly IAsyncRepository<SearchResult, int> _searchResultRepository;
+        private readonly IAsyncRepository<SearchResultItem, int> _searchResultItemsRepository;
         private readonly ISearchResponseParser _searchResponseParser;
         private readonly IQuestorLogger<SearchService> _logger;
 
         public SearchService(IEnumerable<ISearchEngine> searchEngines,
-            IAsyncRepository<SearchResult> searchResultRepository,
-            IAsyncRepository<SearchResultItem> searchResultItemsRepository,
+            IAsyncRepository<SearchResult, int> searchResultRepository,
+            IAsyncRepository<SearchResultItem, int> searchResultItemsRepository,
             ISearchResponseParser searchResponseParser,
             IQuestorLogger<SearchService> logger)
         {

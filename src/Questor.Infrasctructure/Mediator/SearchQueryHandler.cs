@@ -9,9 +9,9 @@ namespace Questor.Infrasctructure.Mediator
 {
     public class SearchQueryHandler : IRequestHandler<SearchQuery, SearchResult>
     {
-        private readonly IAsyncRepository<SearchResult> _searchResultRepository;
+        private readonly IAsyncRepository<SearchResult, int> _searchResultRepository;
         
-        public SearchQueryHandler(IAsyncRepository<SearchResult> searchResultRepository)
+        public SearchQueryHandler(IAsyncRepository<SearchResult, int> searchResultRepository)
         {
             this._searchResultRepository = searchResultRepository;
         }

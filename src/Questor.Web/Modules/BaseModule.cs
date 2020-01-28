@@ -31,12 +31,12 @@ namespace Questor.Web.Modules
                 .As(typeof(IQuestorLogger<>))
                 .InstancePerDependency();
 
-            builder.RegisterGeneric(typeof(QuestorRepository<>))
-                .As(typeof(IAsyncRepository<>))
+            builder.RegisterGeneric(typeof(QuestorRepository<,>))
+                .As(typeof(IAsyncRepository<,>))
                 .InstancePerLifetimeScope();
             
             builder.RegisterType<SearchResultRepository>()
-                .As<IAsyncRepository<SearchResult>>()
+                .As<IAsyncRepository<SearchResult, int>>()
                 .InstancePerDependency();
         }
     }

@@ -5,9 +5,9 @@ using Questor.Core.Data.Entities.Base;
 
 namespace Questor.Core.Data
 {
-    public interface IAsyncRepository<T> where T : BaseEntity
+    public interface IAsyncRepository<T, TId> where T : BaseEntity<TId>
     {
-        Task<T> FindAsync(int id);
+        Task<T> FindAsync(TId id);
         
         Task<IReadOnlyList<T>> GetAllAsync();
         

@@ -6,7 +6,7 @@ using Questor.Core.Services.Engines;
 
 namespace Questor.Core.Data.Entities
 {
-    public class SearchResult : BaseEntity
+    public class SearchResult : BaseEntity<int>
     {
         public SearchResult()
         {

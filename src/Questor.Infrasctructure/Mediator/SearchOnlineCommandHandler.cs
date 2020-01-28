@@ -12,7 +12,7 @@ namespace Questor.Infrasctructure.Mediator
     {
         private readonly ISearchService _searchService;
         
-        public SearchOnlineCommandHandler(ISearchService searchService, IAsyncRepository<SearchResult> resultsRepository)
+        public SearchOnlineCommandHandler(ISearchService searchService)
         {
             this._searchService = searchService;
         }

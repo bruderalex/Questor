@@ -3,7 +3,7 @@ using Questor.Core.Services.Business;
 
 namespace Questor.Core.Data.Entities
 {
-    public class SearchResultItem : BaseEntity
+    public class SearchResultItem : BaseEntity<int>
     {
         public SearchResultItem()
         {
