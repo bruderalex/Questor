@@ -3,7 +3,9 @@ services:
     web:
         build:
            context: .
-           dockerfile: /Questor.Web/Dockerfile
+           dockerfile: src/Questor.Web/Dockerfile
+        environment:
+            DB_PASS: "${DB_PASS}"           
         ports:
             - "8080:80"
         depends_on:
@@ -11,7 +13,7 @@ services:
     db:
         image: "mcr.microsoft.com/mssql/server:2019-latest"
         environment:
-            SA_PASSWORD: "P12345678qqq"
+            SA_PASSWORD: "${DB_PASS}"
             ACCEPT_EULA: "Y"
         ports:
             - "1433:1433"
