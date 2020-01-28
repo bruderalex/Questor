@@ -57,7 +57,7 @@ namespace Questor.Web
             }
             else
             {
-                sqlConnectionStringBuilder.Password = Environment.GetEnvironmentVariable("DbPass");
+                sqlConnectionStringBuilder.Password = Environment.GetEnvironmentVariable("DB_PASS");
             }
 
             var connectionString = sqlConnectionStringBuilder.ConnectionString;
