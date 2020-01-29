@@ -10,7 +10,7 @@ using Questor.Core.Data.Entities;
 using Questor.Core.Services.Business;
 using Questor.Core.Services.Business.Impl;
 using Questor.Core.Services.Engines;
-using Questor.Core.Tests.Auxiliary;
+using Questor.Tests.Common;
 using Xunit;
 
 namespace Questor.Core.Tests
@@ -53,7 +53,7 @@ namespace Questor.Core.Tests
         }
 
         [Theory, AutoMoqData]
-        public async void Search_Service_Get_Should_Return_Same_As_Searched_Result(string request)
+        public async void Search_Service_Get_Should_Return_Same_As_Searched_Online_Result(string request)
         {
             var sut = this._fixture.Create<SearchService>();
 
@@ -61,6 +61,18 @@ namespace Questor.Core.Tests
 
             var retreivedSearchResult = sut.GetSearchResultByUniqueId(savedSearchResult.UniqueId);
 
+            savedSearchResult.Should().Be(retreivedSearchResult);
+        }
+
+        [Theory, AutoMoqData]
+        public async void Search_Service_Get_Should_Return_Same_As_Search_Offline_Result(string request)
+        {
+            var sut = this._fixture.Create<SearchService>();
+            
+            var savedSearchResult = await sut.SearchOfflineAsync(request);
+            
+            var retreivedSearchResult = sut.GetSearchResultByUniqueId(savedSearchResult.UniqueId);
+            
             savedSearchResult.Should().Be(retreivedSearchResult);
         }
     }

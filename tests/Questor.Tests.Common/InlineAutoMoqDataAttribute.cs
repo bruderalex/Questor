@@ -1,7 +1,7 @@
 ﻿using AutoFixture.Xunit2;
 using Xunit;
 
-namespace Questor.Core.Tests.Auxiliary
+namespace Questor.Tests.Common
 {
     public class InlineAutoMoqDataAttribute : CompositeDataAttribute
     {

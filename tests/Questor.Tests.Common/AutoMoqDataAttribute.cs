@@ -3,9 +3,9 @@ using AutoFixture;
 using AutoFixture.AutoMoq;
 using AutoFixture.Xunit2;
 
-namespace Questor.Core.Tests.Auxiliary
+namespace Questor.Tests.Common
 {
-    public class AutoMoqDataAttribute : AutoDataAttribute
+public class AutoMoqDataAttribute : AutoDataAttribute
     {
         private static IFixture _fixture;
 
